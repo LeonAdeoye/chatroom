@@ -12,15 +12,17 @@ class ChatroomAppComponent extends Component
             <>
                 <Grid container rowSpacing={1} columnSpacing={1}>
                     <Grid item  xl={2}>
-                        <Box height='100%' bgcolor='#404040' color='white'><RoomListComponent/></Box>
+                        <Box height='930px' bgcolor='#404040' color='white'><RoomListComponent/></Box>
                     </Grid>
                     <Grid item xl>
-                        <Box height='100%' bgcolor='#404040' color='white'>
-                            <Stack>
-                            <ConversationComponent/>
-                            <ChatEntryComponent/>
-                            </Stack>
-                        </Box>
+                        <Stack>
+                            <Box height='900px' bgcolor='#404040' color='white'>
+                                <ConversationComponent/>
+                            </Box>
+                            <Box height='30px' bgcolor='#404040' color='white'>
+                                <ChatEntryComponent/>
+                            </Box>
+                        </Stack>
                     </Grid>
                 </Grid>
             </>

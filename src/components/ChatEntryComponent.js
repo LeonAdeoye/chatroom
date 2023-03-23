@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {createChatMessage} from "../redux/chatEntry/chatEntryActions";
 import {connect} from "react-redux";
+import {Box} from '@mui/material'
 
 class ChatEntryComponent extends Component
 {
@@ -23,9 +24,10 @@ class ChatEntryComponent extends Component
     {
         return (
             <>
-                <h2>Chat Message: {this.props.chatMessage}</h2>
-                <input type='text' value={this.state.newChatMessage} onChange={e => this.setNewChatMessage(e)}/>
-                <button onClick={() => this.props.enterChatMessage(this.state.newChatMessage)}>Enter</button>
+                <Box bgcolor='#404040' color='white'>
+                    <input type='text' value={this.state.newChatMessage} onChange={e => this.setNewChatMessage(e)}/>
+                    <button onClick={() => this.props.enterChatMessage(this.state.newChatMessage)}>Enter</button>
+                </Box>
             </>
         );
     }

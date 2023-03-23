@@ -11,6 +11,9 @@ class RoomComponent extends Component
             <>
                 <Box sx={{
                     backgroundColor:'#404040',
+                    border: 2,
+                    p:0.25,
+                    borderRadius: '7px',
                     borderColor:'white',
                     borderWidth:'1px',
                     color:'white',
