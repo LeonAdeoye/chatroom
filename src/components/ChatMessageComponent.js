@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import {Box} from "@mui/material";
 
 class ChatMessageComponent extends Component
 {
@@ -7,7 +8,7 @@ class ChatMessageComponent extends Component
     {
         return (
             <div>
-                <span>{this.props.chatMessage}</span>
+                <Box sx={{backgroundColor:'primary.main', color:'white'}}>{this.props.chatMessage}</Box>
                 <br/>
             </div>
         );

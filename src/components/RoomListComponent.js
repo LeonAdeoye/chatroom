@@ -12,9 +12,12 @@ class RoomListComponent extends Component
                 {
                     this.props.rooms.map((room, index) => <RoomComponent key={index} roomName={room}></RoomComponent>)
                 }
-                <button onClick={this.props.fetchRooms}>Fetch Rooms</button>
             </>
         );
+    }
+    componentDidMount()
+    {
+        this.props.fetchRooms();
     }
 }
 

@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchConversation} from "../redux/room/roomActions";
+import {Box} from '@mui/material'
 
 class RoomComponent extends Component
 {
     render()
     {
         return (
-            <div>
-                <button onClick={this.props.fetchConversation}>{this.props.roomName}</button>
-            </div>
+            <>
+                <Box sx={{
+                    backgroundColor:'#404040',
+                    borderColor:'white',
+                    borderWidth:'1px',
+                    color:'white',
+                    height: '20px',
+                    padding: '10px',
+                    '&:hover': { backgroundColor: '#626060'} }}
+                    onClick={this.props.fetchConversation}>{this.props.roomName}</Box>
+            </>
         );
     }
 }
