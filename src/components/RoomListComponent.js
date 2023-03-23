@@ -1,32 +1,34 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {createRoom, fetchRooms} from "../redux/roomList/roomListActions";
+import RoomComponent from "./RoomComponent";
 
 class RoomListComponent extends Component
 {
     render()
     {
-        console.log("props: ",this.props);
         return (
             <>
-                <ul>
-                    {
-                        this.props.rooms.map((room, index) => <li key={index}>{room}</li>)
-                    }
-                </ul>
+                {
+                    this.props.rooms.map((room, index) => <RoomComponent key={index} roomName={room}></RoomComponent>)
+                }
                 <button onClick={this.props.fetchRooms}>Fetch Rooms</button>
             </>
         );
     }
 }
 
-const mapStateToProps = (state) => {
+// The second parameter is props of the component itself passed in by the parent.
+// By convention, the second parameter is called ownProps.
+const mapStateToProps = (state, ownProps) =>
+{
     return {
         rooms: state.roomList.rooms
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) =>
+{
     return {
         createRoom: () => dispatch(createRoom()),
         fetchRooms: () => dispatch(fetchRooms())

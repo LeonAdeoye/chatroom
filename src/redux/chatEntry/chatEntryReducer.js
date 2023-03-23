@@ -12,7 +12,7 @@ const chatEntryReducer = (state = initialState, action) =>
         case CREATE_CHAT_MESSAGE:
             return {
                 ...state,
-                chatMessage: 'Hello World!'
+                chatMessage: "Leon wrote: " + action.payload
             }
         default: return state;
     }

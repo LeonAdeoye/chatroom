@@ -3,6 +3,7 @@ import {Provider} from 'react-redux'
 import configureStore from "./redux/store";
 import ChatEntryComponent from "./components/ChatEntryComponent";
 import RoomListComponent from "./components/RoomListComponent";
+import ConversationComponent from "./components/ConversationComponent";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
           <div className="App">
               <ChatEntryComponent/>
               <RoomListComponent/>
+              <ConversationComponent/>
           </div>
       </Provider>
   );

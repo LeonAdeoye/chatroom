@@ -14,7 +14,9 @@ class ChatEntryComponent extends Component
 
     setNewChatMessage = (event) =>
     {
-        this.state.newChatMessage = event.target.value;
+        this.setState({
+            newChatMessage: event.target.value
+        })
     }
 
     render()
@@ -22,20 +24,24 @@ class ChatEntryComponent extends Component
         return (
             <>
                 <h2>Chat Message: {this.props.chatMessage}</h2>
-                <input type='text' value={this.props.chatMessage} onChange={this.setNewChatMessage}/>
+                <input type='text' value={this.state.newChatMessage} onChange={e => this.setNewChatMessage(e)}/>
                 <button onClick={() => this.props.enterChatMessage(this.state.newChatMessage)}>Enter</button>
             </>
         );
     }
 }
 
-const mapStateToProps = (state) => {
+// The second parameter is props of the component itself passed in by the parent.
+// By convention, the second parameter is called ownProps.
+const mapStateToProps = (state, ownProps) =>
+{
     return {
         chatMessage: state.chatEntry.chatMessage
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) =>
+{
     return {
         enterChatMessage: (newChatMessage) => dispatch(createChatMessage(newChatMessage))
     }
