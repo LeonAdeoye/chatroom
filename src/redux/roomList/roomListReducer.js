@@ -4,7 +4,7 @@ const initialState =
 {
     rooms: [],
     loading: false,
-    error: ''
+    errorMessage: ''
 }
 
 const roomListReducer = (state = initialState, action) =>
@@ -32,21 +32,21 @@ const roomListReducer = (state = initialState, action) =>
                 ...state,
                 rooms: [],
                 loading: true,
-                error: ''
+                errorMessage: ''
             }
         case FETCH_ROOMS_REQUEST_SUCCESS:
             return {
                 ...state,
                 rooms: action.payload,
                 loading: false,
-                error: ''
+                errorMessage: ''
             }
         case FETCH_ROOMS_REQUEST_FAILURE:
             return {
                 ...state,
                 rooms: [],
                 loading: false,
-                error: action.payload
+                errorMessage: action.payload
             }
         default: return state;
     }

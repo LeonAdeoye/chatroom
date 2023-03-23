@@ -4,7 +4,7 @@ const initialState =
 {
     conversation: [],
     loading: false,
-    error: ''
+    errorMessage: ''
 }
 
 const roomReducer = (state = initialState, action) =>
@@ -16,21 +16,21 @@ const roomReducer = (state = initialState, action) =>
                 ...state,
                 conversation: [],
                 loading: true,
-                error: ''
+                errorMessage: ''
             }
         case FETCH_ROOM_CONVERSATION_SUCCESS:
             return {
                 ...state,
                 conversation: action.payload,
                 loading: false,
-                error: ''
+                errorMessage: ''
             }
         case FETCH_ROOM_CONVERSATION_FAILURE:
             return {
                 ...state,
                 conversation: [],
                 loading: false,
-                error: action.payload
+                errorMessage: action.payload
             }
         default: return state;
     }

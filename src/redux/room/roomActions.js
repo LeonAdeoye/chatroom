@@ -40,7 +40,7 @@ export const fetchConversation = (selectedRoom) =>
             })
             .catch(err =>
             {
-                console.log('error: ', err);
+                console.log('error return from fetch conversation: ', err);
                 dispatch(fetchConversationRequestFailure(err.message));
             });
     }
