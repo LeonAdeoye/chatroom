@@ -4,26 +4,40 @@ import {connect} from "react-redux";
 
 class ChatEntryComponent extends Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            newChatMessage: ''
+        }
+    }
+
+    setNewChatMessage = (event) =>
+    {
+        this.state.newChatMessage = event.target.value;
+    }
+
     render()
     {
         return (
-            <div>
+            <>
                 <h2>Chat Message: {this.props.chatMessage}</h2>
-                <button onClick={this.props.enterChatMessage}>Enter</button>
-            </div>
+                <input type='text' value={this.props.chatMessage} onChange={this.setNewChatMessage}/>
+                <button onClick={() => this.props.enterChatMessage(this.state.newChatMessage)}>Enter</button>
+            </>
         );
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        chatMessage: state.chatMessage
+        chatMessage: state.chatEntry.chatMessage
     }
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        enterChatMessage: () => dispatch(createChatMessage())
+        enterChatMessage: (newChatMessage) => dispatch(createChatMessage(newChatMessage))
     }
 }
 

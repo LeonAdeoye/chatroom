@@ -1,8 +1,9 @@
 import {CREATE_CHAT_MESSAGE} from "./chatEntryTypes";
 
-export const createChatMessage = () =>
+export const createChatMessage = (newChatMessage) =>
 {
     return {
-        type: CREATE_CHAT_MESSAGE
+        type: CREATE_CHAT_MESSAGE,
+        payload: newChatMessage
     }
 }

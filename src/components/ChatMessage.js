@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 
-class ConversationComponent extends Component
+class ChatMessage extends Component
 {
     render()
     {
         return (
             <>
-                Conversation
+
             </>
         );
     }
 }
 
-export default ConversationComponent;
+export default ChatMessage;

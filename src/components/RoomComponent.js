@@ -1,15 +1,15 @@
 import React, {Component} from 'react';
 
-class ConversationComponent extends Component
+class RoomComponent extends Component
 {
     render()
     {
         return (
             <>
-                Conversation
+              First room
             </>
         );
     }
 }
 
-export default ConversationComponent;
+export default RoomComponent;
