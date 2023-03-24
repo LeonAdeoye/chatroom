@@ -1,5 +1,9 @@
 import axios from "axios";
-import {FETCH_ROOM_CONVERSATION, FETCH_ROOM_CONVERSATION_FAILURE, FETCH_ROOM_CONVERSATION_SUCCESS} from "./roomTypes";
+import {
+    FETCH_ROOM_CONVERSATION,
+    FETCH_ROOM_CONVERSATION_FAILURE,
+    FETCH_ROOM_CONVERSATION_SUCCESS
+} from "./roomTypes";
 
 
 export const fetchConversationRequest = (selectedRoomIndex) =>

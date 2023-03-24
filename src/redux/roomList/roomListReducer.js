@@ -1,4 +1,12 @@
-import {CREATE_ROOM, DELETE_ROOM, FETCH_ROOMS_REQUEST_FAILURE, FETCH_ROOMS_REQUEST_SUCCESS, FETCH_ROOMS_REQUEST} from "./roomListTypes";
+import {
+    CREATE_ROOM,
+    DELETE_ROOM,
+    CLOSE_ROOM,
+    FETCH_ROOMS_REQUEST_FAILURE,
+    FETCH_ROOMS_REQUEST_SUCCESS,
+    FETCH_ROOMS_REQUEST,
+    ADD_ROOM_TO_FAVOURITES
+} from "./roomListTypes";
 
 const initialState =
 {
@@ -26,6 +34,20 @@ const roomListReducer = (state = initialState, action) =>
                 ...state,
                 rooms: deleteRoomArray
 
+            }
+        case CLOSE_ROOM:
+            // TODO: find room in array and close it.
+            const updatedRooms = state.rooms.filter(object => {
+                return object.id !== action.payload;
+            })
+            return {
+                ...state,
+                rooms: updatedRooms
+            }
+        case ADD_ROOM_TO_FAVOURITES:
+            // TODO: find room in array and add it to favourites it.
+            return {
+                ...state
             }
         case FETCH_ROOMS_REQUEST:
             return {

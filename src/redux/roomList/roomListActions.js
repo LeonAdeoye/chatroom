@@ -1,4 +1,11 @@
-import {CREATE_ROOM, FETCH_ROOMS_REQUEST, FETCH_ROOMS_REQUEST_SUCCESS, FETCH_ROOMS_REQUEST_FAILURE} from "./roomListTypes";
+import {
+    CREATE_ROOM,
+    CLOSE_ROOM,
+    FETCH_ROOMS_REQUEST,
+    FETCH_ROOMS_REQUEST_SUCCESS,
+    FETCH_ROOMS_REQUEST_FAILURE,
+    ADD_ROOM_TO_FAVOURITES
+} from "./roomListTypes";
 import axios from "axios";
 
 export const createRoom = (roomName) =>
@@ -6,6 +13,22 @@ export const createRoom = (roomName) =>
     return {
         type: CREATE_ROOM,
         payload: roomName
+    }
+}
+
+export const closeRoomRequest = (roomId) =>
+{
+    return {
+        type: CLOSE_ROOM,
+        payload: roomId
+    }
+}
+
+export const addRoomToFavouritesRequest = (roomId) =>
+{
+    return {
+        type: ADD_ROOM_TO_FAVOURITES,
+        payload: roomId
     }
 }
 
@@ -32,6 +55,23 @@ export const fetchRoomsRequestFailure = (error) =>
     }
 }
 
+export const closeRoom = (roomId) =>
+{
+    return function(dispatch)
+    {
+        dispatch(closeRoomRequest(roomId))
+    }
+}
+
+export const addRoomToFavourites = (roomId) =>
+{
+    return function(dispatch)
+    {
+        dispatch(addRoomToFavouritesRequest(roomId))
+    }
+}
+
+
 export const fetchRooms = () =>
 {
     return function(dispatch)
@@ -41,7 +81,7 @@ export const fetchRooms = () =>
             .then(response =>
             {
                 console.log('rooms: ', response.data);
-                const rooms = response.data.map(room => room.name);
+                const rooms = response.data;
                 dispatch(fetchRoomsRequestSuccess(rooms));
             })
             .catch(err =>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchConversation} from "../redux/room/roomActions";
+import {addRoomToFavourites, closeRoom} from "../redux/roomList/roomListActions";
 import {Box, IconButton, Stack, Typography} from '@mui/material'
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -9,8 +10,10 @@ class RoomComponent extends Component
 {
     render()
     {
-        const {selectedRoomIndex, myRoomIndex, fetchConversation, roomName} = this.props;
-        const handleClick = () => fetchConversation();
+        const {selectedRoomIndex, myRoomIndex, fetchConversation, roomName, closeRoom, addToFavourites} = this.props;
+        const handleFetchConversation = () => fetchConversation();
+        const handleCloseRoom = () => closeRoom();
+        const handleAddToFavourites = () => addToFavourites();
         return (
             <>
                 <Box sx={{
@@ -31,14 +34,14 @@ class RoomComponent extends Component
                         mr:0.5
                     }}}
                     bgcolor={selectedRoomIndex === myRoomIndex ? '#2c2929' : '#404040'}
-                    onClick={handleClick}>
+                    onClick={handleFetchConversation}>
                         <Stack direction='row' >
                             <Typography>{roomName}</Typography>
                             <Box display="flex" alignItems="right">
-                                <IconButton sx={{ color:'white'}}>
+                                <IconButton sx={{ color:'white'}} onClick={handleAddToFavourites}>
                                     <StarBorderPurple500RoundedIcon/>
                                 </IconButton>
-                                <IconButton sx={{ color:'white'}} size='small'>
+                                <IconButton sx={{ color:'white'}} size='small' onClick={handleCloseRoom}>
                                     <CloseRoundedIcon/>
                                 </IconButton>
                             </Box>
@@ -63,7 +66,9 @@ const mapStateToProps = (state, ownProps) =>
 const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
-        fetchConversation: () => dispatch(fetchConversation(ownProps.index))
+        fetchConversation: () => dispatch(fetchConversation(ownProps.index)),
+        closeRoom: () => dispatch(closeRoom(ownProps.index)),
+        addToFavourites: () => dispatch(addRoomToFavourites(ownProps.index))
     }
 }
 

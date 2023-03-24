@@ -10,7 +10,7 @@ class RoomListComponent extends Component
         return (
             <>
                 {
-                    this.props.rooms.map((room, index) => <RoomComponent key={index} index={index} roomName={room}></RoomComponent>)
+                    this.props.rooms.map((room, index) => <RoomComponent key={room.id} index={room.id} roomName={room.name}></RoomComponent>)
                 }
             </>
         );
