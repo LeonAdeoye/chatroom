@@ -4,7 +4,8 @@ const initialState =
 {
     conversation: [],
     loading: false,
-    errorMessage: ''
+    errorMessage: '',
+    selectedRoomIndex: -1
 }
 
 const roomReducer = (state = initialState, action) =>
@@ -16,7 +17,8 @@ const roomReducer = (state = initialState, action) =>
                 ...state,
                 conversation: [],
                 loading: true,
-                errorMessage: ''
+                errorMessage: '',
+                selectedRoomIndex: action.payload
             }
         case FETCH_ROOM_CONVERSATION_SUCCESS:
             return {

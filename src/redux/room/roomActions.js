@@ -2,10 +2,11 @@ import axios from "axios";
 import {FETCH_ROOM_CONVERSATION, FETCH_ROOM_CONVERSATION_FAILURE, FETCH_ROOM_CONVERSATION_SUCCESS} from "./roomTypes";
 
 
-export const fetchConversationRequest = () =>
+export const fetchConversationRequest = (selectedRoomIndex) =>
 {
     return {
-        type: FETCH_ROOM_CONVERSATION
+        type: FETCH_ROOM_CONVERSATION,
+        payload: selectedRoomIndex
     }
 }
 
@@ -25,12 +26,11 @@ export const fetchConversationRequestFailure = (error) =>
     }
 }
 
-export const fetchConversation = (selectedRoom) =>
+export const fetchConversation = (selectedRoomIndex) =>
 {
     return function(dispatch)
     {
-        console.log("selected room:", selectedRoom);
-        dispatch(fetchConversationRequest());
+        dispatch(fetchConversationRequest(selectedRoomIndex));
         axios.get('https://jsonplaceholder.typicode.com/posts')
             .then(response =>
             {
