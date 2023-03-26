@@ -39,7 +39,7 @@ export const fetchConversation = (selectedRoomIndex) =>
             .then(response =>
             {
                 console.log('conversation: ', response.data);
-                const conversation = response.data.map(conversation => conversation.title);
+                const conversation = response.data;
                 dispatch(fetchConversationRequestSuccess(conversation));
             })
             .catch(err =>

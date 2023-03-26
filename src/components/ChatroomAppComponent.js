@@ -10,16 +10,16 @@ class ChatroomAppComponent extends Component
     {
         return (
             <>
-                <Grid container rowSpacing={1} columnSpacing={1}>
+                <Grid container rowSpacing={0} columnSpacing={0.25}>
                     <Grid item  xl={2}>
                         <Box height='930px' bgcolor='#404040' color='white'><RoomListComponent/></Box>
                     </Grid>
                     <Grid item xl>
                         <Stack>
-                            <Box height='900px' bgcolor='#404040' color='white'>
+                            <Box height='900px' bgcolor='#404040'>
                                 <ConversationComponent/>
                             </Box>
-                            <Box height='30px' bgcolor='#404040' color='white'>
+                            <Box height='30px' bgcolor='#404040'>
                                 <ChatEntryComponent/>
                             </Box>
                         </Stack>

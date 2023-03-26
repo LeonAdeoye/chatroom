@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchConversation} from "../redux/room/roomActions";
 import {addRoomToFavourites, closeRoom} from "../redux/roomList/roomListActions";
-import {Box, IconButton, Stack, Typography} from '@mui/material'
+import {Box, Grid, IconButton, Typography} from '@mui/material'
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
@@ -35,18 +35,23 @@ class RoomComponent extends Component
                     }}}
                     bgcolor={selectedRoomIndex === myRoomIndex ? '#2c2929' : '#404040'}
                     onClick={handleFetchConversation}>
-                        <Stack direction='row' >
+                    <Grid container rowSpacing={0} columnSpacing={0}>
+                        <Grid item  xl>
                             <Typography>{roomName}</Typography>
-                            <Box display="flex" alignItems="right">
-                                <IconButton sx={{ color:'white'}} onClick={handleAddToFavourites}>
+                        </Grid>
+                        <Grid item xl={2}>
+                            {(selectedRoomIndex === myRoomIndex) &&
+                            <Box display="flex" alignItems="center">
+                                <IconButton sx={{ color:'white'}} size='small' onClick={handleAddToFavourites}>
                                     <StarBorderPurple500RoundedIcon/>
                                 </IconButton>
                                 <IconButton sx={{ color:'white'}} size='small' onClick={handleCloseRoom}>
                                     <CloseRoundedIcon/>
                                 </IconButton>
-                            </Box>
-                        </Stack>
-                    </Box>
+                            </Box>}
+                        </Grid>
+                    </Grid>
+                </Box>
             </>
         );
     }

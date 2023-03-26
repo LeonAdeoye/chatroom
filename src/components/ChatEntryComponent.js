@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 import {createChatMessage} from "../redux/chatEntry/chatEntryActions";
 import {connect} from "react-redux";
-import {Box} from '@mui/material'
+import {Stack, IconButton} from '@mui/material'
+import SendIcon from '@mui/icons-material/Send';
+import ArticleIcon from '@mui/icons-material/Article';
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
 
 class ChatEntryComponent extends Component
 {
@@ -24,10 +28,21 @@ class ChatEntryComponent extends Component
     {
         return (
             <>
-                <Box bgcolor='#404040' color='white'>
-                    <input type='text' value={this.state.newChatMessage} onChange={e => this.setNewChatMessage(e)}/>
-                    <button onClick={() => this.props.enterChatMessage(this.state.newChatMessage)}>Enter</button>
-                </Box>
+                <Stack bgcolor='#104040' width='100%' direction='row' height='50px'>
+                    <Paper component="form"  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width:'100%', backgroundColor: '#404040', border: '1.5px solid white' }}>
+                        <IconButton sx={{color:'white'}} size='small'>
+                            <ArticleIcon/>
+                        </IconButton>
+                        <InputBase
+                            sx={{ ml: 1, flex: 1, backgroundColor: '#404040', color:'white'}}
+                            placeholder="Enter your chat message here..."
+                            inputProps={{ 'aria-label': 'enter chat' }}
+                        />
+                        <IconButton size='small' onClick={() => this.props.enterChatMessage(this.state.newChatMessage)} sx={{color:'white'}}>
+                            <SendIcon/>
+                        </IconButton>
+                    </Paper>
+                </Stack>
             </>
         );
     }

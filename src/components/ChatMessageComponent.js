@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Stack} from "@mui/material";
+import {Stack, Box, Typography} from "@mui/material";
 
 class ChatMessageComponent extends Component
 {
@@ -8,10 +8,10 @@ class ChatMessageComponent extends Component
     {
         return (
             <div>
-                <Stack sx={{backgroundColor:'primary.main', color:'white'}} direction='row'>
-                    <span>12:45 am, </span>
-                    <span>Leon Adeoye: </span>
-                    <span>{this.props.chatMessage}</span>
+                <Stack sx={{ color:'white'}} direction='row' >
+                    <Box ml={2} mr={2}><Typography variant={"subtitle2"}>09:45 AM</Typography></Box>
+                    <Box mr={2}><Typography sx={{fontWeight: 'bold'}}>Leon Adeoye:</Typography></Box>
+                    <Box><Typography fontFamily='cursive' color='lightgrey'>{this.props.chatMessage}</Typography></Box>
                 </Stack>
             </div>
         );
@@ -21,7 +21,7 @@ class ChatMessageComponent extends Component
 const mapStateToProps = (state, ownProps) =>
 {
     return {
-        chatMessage: ownProps.chatMessage
+        chatMessage: ownProps.chatMessage.title
     }
 }
 

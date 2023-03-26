@@ -2,17 +2,22 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {createRoom, fetchRooms} from "../redux/roomList/roomListActions";
 import RoomComponent from "./RoomComponent";
+import {TextField} from "@mui/material";
 
 class RoomListComponent extends Component
 {
     render()
     {
         return (
-            <>
-                {
-                    this.props.rooms.map((room, index) => <RoomComponent key={room.id} index={room.id} roomName={room.name}></RoomComponent>)
-                }
-            </>
+            <div>
+                 <TextField label='Enter text to filter rooms...'
+                            variant='outlined'
+                            size="small"
+                            InputLabelProps={{ style: { color: 'white' } }}
+                            inputProps={{ style: { color: 'white', borderColor: 'white'} }}
+                            sx={{mt:2, mb:2, mr:2, ml:2, width:'90%', backgroundColor:'#575555'}}/>
+                 {this.props.rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}
+            </div>
         );
     }
     componentDidMount()
