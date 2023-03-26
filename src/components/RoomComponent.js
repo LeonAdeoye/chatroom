@@ -27,7 +27,7 @@ class RoomComponent extends Component
                     ml:0.5,
                     mr:0.5,
                     '&:hover': {
-                        backgroundColor: '#575555',
+                        backgroundColor: '#4f4e4e',
                         borderColor:'white',
                         border:1,
                         ml:0.5,

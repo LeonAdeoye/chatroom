@@ -7,8 +7,8 @@ class RoomHeaderComponent extends Component
     {
         return (
             <div>
-                <Stack width={'100%'} sx={{ border:1, borderColor:'white', backgroundColor:'#2c2929'}}>
-                    <Box ><Typography variant='h5' fontFamily='Calibri' sx={{color:'lightgrey'}}>{this.props.roomName}</Typography></Box>
+                <Stack width={'100%'} sx={{ border:1, borderColor:'white', backgroundColor:'#363535'}}>
+                    <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{this.props.roomName}</Typography></Box>
                     <Stack direction='row'><Typography sx={{color:'lightgrey'}}  variant="subtitle2">members: {this.props.memberCount}</Typography></Stack>
                 </Stack>
             </div>
