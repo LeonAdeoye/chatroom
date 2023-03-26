@@ -1,6 +1,7 @@
 import {
     CREATE_ROOM,
     CLOSE_ROOM,
+    SELECT_ROOM,
     FETCH_ROOMS_REQUEST,
     FETCH_ROOMS_REQUEST_SUCCESS,
     FETCH_ROOMS_REQUEST_FAILURE,
@@ -20,6 +21,14 @@ export const closeRoomRequest = (roomId) =>
 {
     return {
         type: CLOSE_ROOM,
+        payload: roomId
+    }
+}
+
+export const selectRoomRequest = (roomId) =>
+{
+    return {
+        type: SELECT_ROOM,
         payload: roomId
     }
 }
@@ -68,6 +77,14 @@ export const addRoomToFavourites = (roomId) =>
     return function(dispatch)
     {
         dispatch(addRoomToFavouritesRequest(roomId))
+    }
+}
+
+export const selectRoom = (selectedRoomIndex) =>
+{
+    return function(dispatch)
+    {
+        dispatch(selectRoomRequest(selectedRoomIndex));
     }
 }
 

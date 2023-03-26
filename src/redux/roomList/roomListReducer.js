@@ -2,6 +2,7 @@ import {
     CREATE_ROOM,
     DELETE_ROOM,
     CLOSE_ROOM,
+    SELECT_ROOM,
     FETCH_ROOMS_REQUEST_FAILURE,
     FETCH_ROOMS_REQUEST_SUCCESS,
     FETCH_ROOMS_REQUEST,
@@ -12,7 +13,8 @@ const initialState =
 {
     rooms: [],
     loading: false,
-    errorMessage: ''
+    errorMessage: '',
+    selectedRoom: null
 }
 
 const roomListReducer = (state = initialState, action) =>
@@ -43,6 +45,12 @@ const roomListReducer = (state = initialState, action) =>
             return {
                 ...state,
                 rooms: updatedRooms
+            }
+        case SELECT_ROOM:
+            const room = state.rooms.find(room => room.id === action.payload)
+            return {
+                ...state,
+                selectedRoom: room
             }
         case ADD_ROOM_TO_FAVOURITES:
             // TODO: find room in array and add it to favourites it.

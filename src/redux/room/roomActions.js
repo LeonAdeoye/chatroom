@@ -38,13 +38,10 @@ export const fetchConversation = (selectedRoomIndex) =>
         axios.get('https://jsonplaceholder.typicode.com/posts')
             .then(response =>
             {
-                console.log('conversation: ', response.data);
-                const conversation = response.data;
-                dispatch(fetchConversationRequestSuccess(conversation));
+                dispatch(fetchConversationRequestSuccess(response.data));
             })
             .catch(err =>
             {
-                console.log('error return from fetch conversation: ', err);
                 dispatch(fetchConversationRequestFailure(err.message));
             });
     }

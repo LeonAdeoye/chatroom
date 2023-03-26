@@ -9,23 +9,30 @@ import InputBase from '@mui/material/InputBase';
 
 class ChatEntryComponent extends Component
 {
-    constructor(props)
-    {
+    constructor(props) {
         super(props);
         this.state = {
             newChatMessage: ''
         }
     }
-
-    setNewChatMessage = (event) =>
-    {
-        this.setState({
-            newChatMessage: event.target.value
-        })
-    }
-
     render()
     {
+        const {createChatMessage} = this.props;
+        const handleSendNewChatMessage = () =>
+        {
+            createChatMessage(this.state.newChatMessage);
+            this.setState({
+                newChatMessage: ""
+            });
+        }
+
+        const handleOnChangeNewChatMessage = (event) =>
+        {
+            this.setState({
+                newChatMessage: event.target.value
+            });
+        }
+
         return (
             <>
                 <Stack bgcolor='#104040' width='100%' direction='row' height='50px'>
@@ -33,12 +40,13 @@ class ChatEntryComponent extends Component
                         <IconButton sx={{color:'white'}} size='small'>
                             <ArticleIcon/>
                         </IconButton>
-                        <InputBase
+                        <InputBase onChange={handleOnChangeNewChatMessage}
                             sx={{ ml: 1, flex: 1, backgroundColor: '#404040', color:'white'}}
                             placeholder="Enter your chat message here..."
+                            value={this.state.newChatMessage}
                             inputProps={{ 'aria-label': 'enter chat' }}
                         />
-                        <IconButton size='small' onClick={() => this.props.enterChatMessage(this.state.newChatMessage)} sx={{color:'white'}}>
+                        <IconButton size='small' onClick={handleSendNewChatMessage} sx={{color:'white'}}>
                             <SendIcon/>
                         </IconButton>
                     </Paper>
@@ -60,7 +68,7 @@ const mapStateToProps = (state, ownProps) =>
 const mapDispatchToProps = (dispatch) =>
 {
     return {
-        enterChatMessage: (newChatMessage) => dispatch(createChatMessage(newChatMessage))
+        createChatMessage: (newChatMessage) => dispatch(createChatMessage(newChatMessage))
     }
 }
 

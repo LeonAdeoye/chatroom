@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchConversation} from "../redux/room/roomActions";
-import {addRoomToFavourites, closeRoom} from "../redux/roomList/roomListActions";
+import {addRoomToFavourites, closeRoom, selectRoom} from "../redux/roomList/roomListActions";
 import {Box, Grid, IconButton, Typography} from '@mui/material'
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -10,8 +10,14 @@ class RoomComponent extends Component
 {
     render()
     {
-        const {selectedRoomIndex, myRoomIndex, fetchConversation, roomName, closeRoom, addToFavourites} = this.props;
-        const handleFetchConversation = () => fetchConversation();
+        const {selectedRoomIndex, myRoomIndex, fetchConversation, roomName, selectRoom, closeRoom, addToFavourites} = this.props;
+
+        const handleFetchConversation = () =>
+        {
+            fetchConversation();
+            selectRoom();
+        }
+
         const handleCloseRoom = () => closeRoom();
         const handleAddToFavourites = () => addToFavourites();
         return (
@@ -73,6 +79,7 @@ const mapDispatchToProps = (dispatch, ownProps) =>
     return {
         fetchConversation: () => dispatch(fetchConversation(ownProps.index)),
         closeRoom: () => dispatch(closeRoom(ownProps.index)),
+        selectRoom: () => dispatch(selectRoom(ownProps.index)),
         addToFavourites: () => dispatch(addRoomToFavourites(ownProps.index))
     }
 }
