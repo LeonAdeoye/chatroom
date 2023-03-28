@@ -19,7 +19,7 @@ class ChatMessageComponent extends Component
                        direction='row'
                        onClick={handleSelectChatMessage}
                        bgcolor={selectedChatMessageIndex === myChatMessageIndex ? '#2c2929' : '#404040'}>
-                    <Box ml={2} mr={2}><Typography variant={"subtitle2"}>09:45 AM</Typography></Box>
+                    <Box ml={2} mr={2}><Typography fontSize='4' fontFamily='Arial' color='lightgrey'>09:45 AM</Typography></Box>
                     <Box mr={2}><Typography sx={{fontWeight: 'bold'}}>Leon Adeoye:</Typography></Box>
                     <Box><Typography fontFamily='cursive' color='lightgrey'>{chatMessage}</Typography></Box>
                 </Stack>
