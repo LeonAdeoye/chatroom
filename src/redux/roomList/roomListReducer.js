@@ -1,11 +1,7 @@
 import {
-    CREATE_ROOM,
-    DELETE_ROOM,
-    CLOSE_ROOM,
-    SELECT_ROOM,
-    FETCH_ROOMS_REQUEST_FAILURE,
-    FETCH_ROOMS_REQUEST_SUCCESS,
-    FETCH_ROOMS_REQUEST,
+    CREATE_ROOM, DELETE_ROOM, CLOSE_ROOM, SELECT_ROOM,
+    FETCH_ROOMS_REQUEST_FAILURE, FETCH_ROOMS_REQUEST_SUCCESS,
+    FETCH_ROOMS_REQUEST, TOGGLE_CREATE_ROOM_DIALOG,
     ADD_ROOM_TO_FAVOURITES
 } from "./roomListTypes";
 
@@ -14,7 +10,8 @@ const initialState =
     rooms: [],
     loading: false,
     errorMessage: '',
-    selectedRoom: null
+    selectedRoom: null,
+    openCreateRoomDialogFlag: false
 }
 
 const roomListReducer = (state = initialState, action) =>
@@ -28,6 +25,11 @@ const roomListReducer = (state = initialState, action) =>
                 ...state,
                 rooms: createRoomArray
 
+            }
+        case TOGGLE_CREATE_ROOM_DIALOG:
+            return {
+                ...state,
+                openCreateRoomDialogFlag: !state.openCreateRoomDialogFlag
             }
         case DELETE_ROOM:
             const deleteRoomArray = Array.from(state.rooms);

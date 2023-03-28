@@ -1,4 +1,5 @@
 export const CREATE_ROOM = "CREATE_ROOM";
+export const TOGGLE_CREATE_ROOM_DIALOG = "TOGGLE_CREATE_ROOM_DIALOG";
 export const DELETE_ROOM = "DELETE_ROOM";
 export const CLOSE_ROOM = "CLOSE_ROOM";
 export const SELECT_ROOM = "SELECT_ROOM";

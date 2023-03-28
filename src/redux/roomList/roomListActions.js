@@ -1,19 +1,16 @@
 import {
-    CREATE_ROOM,
-    CLOSE_ROOM,
-    SELECT_ROOM,
-    FETCH_ROOMS_REQUEST,
-    FETCH_ROOMS_REQUEST_SUCCESS,
-    FETCH_ROOMS_REQUEST_FAILURE,
-    ADD_ROOM_TO_FAVOURITES
+    CREATE_ROOM, CLOSE_ROOM, SELECT_ROOM,
+    FETCH_ROOMS_REQUEST, FETCH_ROOMS_REQUEST_SUCCESS,
+    FETCH_ROOMS_REQUEST_FAILURE, ADD_ROOM_TO_FAVOURITES,
+    TOGGLE_CREATE_ROOM_DIALOG
 } from "./roomListTypes";
+
 import axios from "axios";
 
-export const createRoom = (roomName) =>
+export const toggleCreateRoomDialogFlagRequest = () =>
 {
     return {
-        type: CREATE_ROOM,
-        payload: roomName
+        type: TOGGLE_CREATE_ROOM_DIALOG
     }
 }
 
@@ -106,5 +103,13 @@ export const fetchRooms = () =>
                 console.log('error: ', err);
                 dispatch(fetchRoomsRequestFailure(err.message));
             });
+    }
+}
+
+export const toggleCreateRoomDialogFlag = () =>
+{
+    return function(dispatch)
+    {
+        dispatch(toggleCreateRoomDialogFlagRequest());
     }
 }

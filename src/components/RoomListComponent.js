@@ -1,25 +1,41 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {createRoom, fetchRooms} from "../redux/roomList/roomListActions";
+import {fetchRooms, toggleCreateRoomDialogFlag} from "../redux/roomList/roomListActions";
 import RoomComponent from "./RoomComponent";
-import {TextField} from "@mui/material";
+import {IconButton, Stack, TextField} from "@mui/material";
+import NewRoomDialogComponent from "./NewRoomDialogComponent";
+import AddCommentIcon from '@mui/icons-material/AddComment';
 
 class RoomListComponent extends Component
 {
     render()
     {
+        const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag} = this.props;
+
+        const handleClick = () =>
+        {
+            toggleCreateRoomDialogFlag();
+        }
+
         return (
             <div>
-                 <TextField label='Enter text to filter rooms...'
-                            variant='outlined'
-                            size="small"
-                            InputLabelProps={{ style: { color: 'white' } }}
-                            inputProps={{ style: { color: 'white', borderColor: 'white'} }}
-                            sx={{mt:2, mb:2, mr:2, ml:2, width:'90%', backgroundColor:'#575555'}}/>
+                {openCreateRoomDialogFlag && <NewRoomDialogComponent/>}
+                <Stack direction='row'>
+                    <TextField label='Enter text to filter'
+                               variant='outlined'
+                               size="small"
+                               InputLabelProps={{ style: { color: 'white' } }}
+                               inputProps={{ style: { color: 'white', borderColor: 'white'} }}
+                               sx={{mt:2, mb:2, mr:0, ml:2, width:'70%', backgroundColor:'#575555'}}/>
+                    <IconButton size='small' onClick={handleClick} sx={{ color: 'white'}}>
+                        <AddCommentIcon/>
+                    </IconButton>
+                </Stack>
                  {this.props.rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}
             </div>
         );
     }
+
     componentDidMount()
     {
         this.props.fetchRooms();
@@ -31,14 +47,15 @@ class RoomListComponent extends Component
 const mapStateToProps = (state, ownProps) =>
 {
     return {
-        rooms: state.roomList.rooms
+        rooms: state.roomList.rooms,
+        openCreateRoomDialogFlag: state.roomList.openCreateRoomDialogFlag
     }
 }
 
 const mapDispatchToProps = (dispatch) =>
 {
     return {
-        createRoom: () => dispatch(createRoom()),
+        toggleCreateRoomDialogFlag: () => dispatch(toggleCreateRoomDialogFlag()),
         fetchRooms: () => dispatch(fetchRooms())
     }
 }
