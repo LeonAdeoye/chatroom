@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchConversation} from "../redux/room/roomActions";
 import {addRoomToFavourites, closeRoom, selectRoom} from "../redux/roomList/roomListActions";
-import {Box, Grid, IconButton, Typography} from '@mui/material'
+import {Box, Grid, IconButton, Tooltip, Typography} from '@mui/material'
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 
@@ -48,12 +48,16 @@ class RoomComponent extends Component
                         <Grid item xl={2}>
                             {(selectedRoomIndex === myRoomIndex) &&
                             <Box display="flex" alignItems="center">
-                                <IconButton sx={{ color:'white'}} size='small' onClick={handleAddToFavourites}>
-                                    <StarBorderPurple500RoundedIcon/>
-                                </IconButton>
-                                <IconButton sx={{ color:'white'}} size='small' onClick={handleCloseRoom}>
-                                    <CloseRoundedIcon/>
-                                </IconButton>
+                                <Tooltip title='Add chat room to favourites.'>
+                                    <IconButton sx={{ color:'white'}} size='small' onClick={handleAddToFavourites}>
+                                        <StarBorderPurple500RoundedIcon/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title='Hide chat room.'>
+                                    <IconButton sx={{ color:'white'}} size='small' onClick={handleCloseRoom}>
+                                        <CloseRoundedIcon/>
+                                    </IconButton>
+                                </Tooltip>
                             </Box>}
                         </Grid>
                     </Grid>

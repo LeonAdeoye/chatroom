@@ -26,7 +26,7 @@ class RoomListComponent extends Component
                                size="small"
                                InputLabelProps={{ style: { color: 'white' } }}
                                inputProps={{ style: { color: 'white', borderColor: 'white'} }}
-                               sx={{mt:2, mb:2, mr:0, ml:2, width:'70%', backgroundColor:'#575555'}}/>
+                               sx={{mt:2, mb:2, mr:0, ml:2, width:'85%', backgroundColor:'#575555'}}/>
                     <Tooltip title='Click to add a new chat room.'>
                         <IconButton size='small' onClick={handleClick} sx={{ color: 'white'}}>
                             <AddCommentIcon/>
