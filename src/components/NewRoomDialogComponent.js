@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
-import {fetchRooms, toggleCreateRoomDialogFlag} from "../redux/roomList/roomListActions";
+import {toggleCreateRoomDialogFlag} from "../redux/roomList/roomListActions";
 import {connect} from "react-redux";
 
 class NewRoomDialogComponent extends Component
@@ -69,7 +69,7 @@ class NewRoomDialogComponent extends Component
 
 // The second parameter is props of the component itself passed in by the parent.
 // By convention, the second parameter is called ownProps.
-const mapStateToProps = (state, ownProps) =>
+const mapStateToProps = (state) =>
 {
     return {
         openCreateRoomDialogFlag: state.roomList.openCreateRoomDialogFlag

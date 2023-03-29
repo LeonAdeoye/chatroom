@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {createChatMessage} from "../redux/chatEntry/chatEntryActions";
 import {connect} from "react-redux";
-import {Stack, IconButton} from '@mui/material'
+import {Stack, IconButton, Tooltip} from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import ArticleIcon from '@mui/icons-material/Article';
 import Paper from '@mui/material/Paper';
@@ -37,18 +37,22 @@ class ChatEntryComponent extends Component
             <>
                 <Stack bgcolor='#104040' width='100%' direction='row' height='50px'>
                     <Paper component="form"  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width:'100%', backgroundColor: '#404040', border: '1.5px solid white' }}>
-                        <IconButton sx={{color:'white'}} size='small'>
-                            <ArticleIcon/>
-                        </IconButton>
+                        <Tooltip title='Click to switch to multi-line edit mode.'>
+                            <IconButton sx={{color:'white'}} size='small'>
+                                <ArticleIcon/>
+                            </IconButton>
+                        </Tooltip>
                         <InputBase onChange={handleOnChangeNewChatMessage}
                             sx={{ ml: 1, flex: 1, backgroundColor: '#404040', color:'white'}}
                             placeholder="Enter your chat message here..."
                             value={this.state.newChatMessage}
                             inputProps={{ 'aria-label': 'enter chat' }}
                         />
-                        <IconButton size='small' onClick={handleSendNewChatMessage} sx={{color:'white'}}>
-                            <SendIcon/>
-                        </IconButton>
+                        <Tooltip title='Click to send your chat message.'>
+                            <IconButton size='small' onClick={handleSendNewChatMessage} sx={{color:'white'}}>
+                                <SendIcon/>
+                            </IconButton>
+                        </Tooltip>
                     </Paper>
                 </Stack>
             </>
