@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
 import {connect} from "react-redux";
+import {toggleAddChatRoomAdminDialogFlag} from "../redux/room/roomActions";
 
 class AddChatRoomAdminDialog extends Component
 {
@@ -72,15 +73,14 @@ class AddChatRoomAdminDialog extends Component
 const mapStateToProps = (state) =>
 {
     return {
-        openAddChatRoomAdminDialogFlag: state.roomList.openAddChatRoomAdminDialogFlag
+        openAddChatRoomAdminDialogFlag: state.room.openAddChatRoomAdminDialogFlag
     }
 }
 
 const mapDispatchToProps = (dispatch) =>
 {
-    // TODO
     return {
-        //toggleAddChatRoomAdminDialogFlag: () => dispatch(toggleAddChatRoomAdminDialogFlag())
+        toggleAddChatRoomAdminDialogFlag: () => dispatch(toggleAddChatRoomAdminDialogFlag())
     }
 }
 
