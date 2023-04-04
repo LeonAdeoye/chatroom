@@ -19,7 +19,7 @@ class RoomListComponent extends Component
 
         return (
             <div>
-                {openCreateRoomDialogFlag && <NewRoomDialogComponent/>}
+                openCreateRoomDialogFlag ? <NewRoomDialogComponent/> : null
                 <Stack direction='row'>
                     <TextField label='Enter text to filter'
                                variant='outlined'

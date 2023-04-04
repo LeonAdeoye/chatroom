@@ -10,10 +10,10 @@ class ConversationComponent extends Component
     {
         const {conversation, selectedRoom} = this.props;
         return (
-            selectedRoom && <Box>
+            selectedRoom ? (<Box>
                 <RoomHeaderComponent roomName={selectedRoom.name} memberCount={selectedRoom.memberCount}/>
                 {conversation.slice(0,10).map((chatMessage) => <ChatMessageComponent key={chatMessage.id} index={chatMessage.id} chatMessage={chatMessage}></ChatMessageComponent>)}
-            </Box>
+            </Box>) : null
         );
     }
 }
