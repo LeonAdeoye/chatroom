@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchRooms, toggleCreateRoomDialogFlag} from "../redux/roomList/roomListActions";
 import RoomComponent from "./RoomComponent";
-import {IconButton, Stack, TextField, Tooltip} from "@mui/material";
+import {IconButton, Stack, TextField, Tooltip, Typography} from "@mui/material";
 import NewRoomDialogComponent from "./NewRoomDialogComponent";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 
@@ -19,7 +19,7 @@ class RoomListComponent extends Component
 
         return (
             <div>
-                openCreateRoomDialogFlag ? <NewRoomDialogComponent/> : null
+                {openCreateRoomDialogFlag ? <NewRoomDialogComponent/> : null}
                 <Stack direction='row'>
                     <TextField label='Enter text to filter'
                                variant='outlined'
@@ -27,7 +27,7 @@ class RoomListComponent extends Component
                                InputLabelProps={{ style: { color: 'white' } }}
                                inputProps={{ style: { color: 'white', borderColor: 'white'} }}
                                sx={{mt:2, mb:2, mr:0, ml:2, width:'85%', backgroundColor:'#575555'}}/>
-                    <Tooltip title='Click to add a new chat room.'>
+                    <Tooltip title={<Typography fontSize={20}>Add a new chat room.</Typography>}>
                         <IconButton size='small' onClick={handleClick} sx={{ color: 'white'}}>
                             <AddCommentIcon/>
                         </IconButton>

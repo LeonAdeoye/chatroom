@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {createChatMessage} from "../redux/chatEntry/chatEntryActions";
 import {connect} from "react-redux";
-import {Stack, IconButton, Tooltip} from '@mui/material'
+import {Stack, IconButton, Tooltip, Typography} from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import ArticleIcon from '@mui/icons-material/Article';
 import Paper from '@mui/material/Paper';
@@ -37,7 +37,7 @@ class ChatEntryComponent extends Component
             <>
                 <Stack bgcolor='#104040' width='100%' direction='row' height='50px'>
                     <Paper component="form"  sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width:'100%', backgroundColor: '#404040', border: '1.5px solid white' }}>
-                        <Tooltip title='Click to switch to multi-line edit mode.'>
+                        <Tooltip title={<Typography fontSize={20}>Switch to multi-line edit mode.</Typography>}>
                             <IconButton sx={{color:'white'}} size='small'>
                                 <ArticleIcon/>
                             </IconButton>
@@ -48,7 +48,7 @@ class ChatEntryComponent extends Component
                             value={this.state.newChatMessage}
                             inputProps={{ 'aria-label': 'enter chat' }}
                         />
-                        <Tooltip title='Click to send your chat message.'>
+                        <Tooltip title={<Typography fontSize={20}>Send your chat message.</Typography>}>
                             <IconButton size='small' onClick={handleSendNewChatMessage} sx={{color:'white'}}>
                                 <SendIcon/>
                             </IconButton>

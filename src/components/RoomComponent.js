@@ -48,12 +48,12 @@ class RoomComponent extends Component
                         <Grid item xl={2}>
                             {(selectedRoomIndex === myRoomIndex) &&
                             <Box display="flex" alignItems="center">
-                                <Tooltip title='Add chat room to favourites.'>
+                                <Tooltip title={<Typography fontSize={20}>Add chat room to favourites.</Typography>}>
                                     <IconButton sx={{ color:'white'}} size='small' onClick={handleAddToFavourites}>
                                         <StarBorderPurple500RoundedIcon/>
                                     </IconButton>
                                 </Tooltip>
-                                <Tooltip title='Hide chat room.'>
+                                <Tooltip title={<Typography fontSize={20}>Hide chat room.</Typography>}>
                                     <IconButton sx={{ color:'white'}} size='small' onClick={handleCloseRoom}>
                                         <CloseRoundedIcon/>
                                     </IconButton>
