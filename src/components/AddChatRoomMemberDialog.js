@@ -42,7 +42,7 @@ class AddChatRoomMemberDialog extends Component
                         onClose={() => this.setState({ newRoomMember: ''} )}>
                     <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Add New Chat Member</DialogTitle>
                     <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}}>
-                        <TextField label='Enter the name new member...'
+                        <TextField label='Select the name new member...'
                                    variant='outlined'
                                    width='70%'
                                    size="small"

@@ -42,7 +42,7 @@ class AddChatRoomAdminDialog extends Component
                         onClose={() => this.setState({ newRoomAdmin: ''} )}>
                     <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Add New Chat Room Admin</DialogTitle>
                     <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}}>
-                        <TextField label='Enter the name of chat room admin...'
+                        <TextField label='Select the name of new administrator...'
                                    variant='outlined'
                                    width='70%'
                                    size="small"

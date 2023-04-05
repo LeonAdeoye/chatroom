@@ -3,25 +3,25 @@ import {
     FETCH_ROOM_CONVERSATION,
     FETCH_ROOM_CONVERSATION_FAILURE,
     FETCH_ROOM_CONVERSATION_SUCCESS,
-    ADD_MEMBER_TO_ROOM,
-    ADD_ADMIN_TO_ROOM
+    TOGGLE_ADD_MEMBER_TO_ROOM,
+    TOGGLE_ADD_ADMIN_TO_ROOM
 } from "./roomTypes";
 
-export const toggleAddChatRoomAdminDialogFlagRequest = () =>
+const toggleAddChatRoomAdminDialogFlagRequest = () =>
 {
     return {
-        type: ADD_ADMIN_TO_ROOM
+        type: TOGGLE_ADD_ADMIN_TO_ROOM
     }
 }
 
-export const toggleAddChatRoomMemberDialogFlagRequest = () =>
+const toggleAddChatRoomMemberDialogFlagRequest = () =>
 {
     return {
-        type: ADD_MEMBER_TO_ROOM
+        type: TOGGLE_ADD_MEMBER_TO_ROOM
     }
 }
 
-export const fetchConversationRequest = (selectedRoomIndex) =>
+const fetchConversationRequest = (selectedRoomIndex) =>
 {
     return {
         type: FETCH_ROOM_CONVERSATION,
@@ -29,7 +29,7 @@ export const fetchConversationRequest = (selectedRoomIndex) =>
     }
 }
 
-export const fetchConversationRequestSuccess = (conversation) =>
+const fetchConversationRequestSuccess = (conversation) =>
 {
     return {
         type: FETCH_ROOM_CONVERSATION_SUCCESS,
@@ -37,7 +37,7 @@ export const fetchConversationRequestSuccess = (conversation) =>
     }
 }
 
-export const fetchConversationRequestFailure = (error) =>
+const fetchConversationRequestFailure = (error) =>
 {
     return {
         type: FETCH_ROOM_CONVERSATION_FAILURE,
@@ -66,7 +66,7 @@ export const toggleAddChatRoomAdminDialogFlag = () =>
 {
     return function(dispatch)
     {
-        dispatch(toggleAddChatRoomAdminDialogFlagRequest)
+        dispatch(toggleAddChatRoomAdminDialogFlagRequest())
     }
 }
 
@@ -74,6 +74,6 @@ export const toggleAddChatRoomMemberDialogFlag = () =>
 {
     return function(dispatch)
     {
-        dispatch(toggleAddChatRoomMemberDialogFlagRequest)
+        dispatch(toggleAddChatRoomMemberDialogFlagRequest())
     }
 }

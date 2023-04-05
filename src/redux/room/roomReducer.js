@@ -1,11 +1,10 @@
 import {
-    ADD_ADMIN_TO_ROOM,
-    ADD_MEMBER_TO_ROOM,
+    TOGGLE_ADD_ADMIN_TO_ROOM,
+    TOGGLE_ADD_MEMBER_TO_ROOM,
     FETCH_ROOM_CONVERSATION,
     FETCH_ROOM_CONVERSATION_FAILURE,
     FETCH_ROOM_CONVERSATION_SUCCESS,
 } from "./roomTypes";
-import {toggleAddChatRoomAdminDialogFlag, toggleAddChatRoomMemberDialogFlag} from "./roomActions";
 
 const initialState =
 {
@@ -13,23 +12,23 @@ const initialState =
     loading: false,
     errorMessage: '',
     selectedRoomIndex: -1,
-    toggleAddChatRoomMemberDialogFlag: false,
-    toggleAddChatRoomAdminDialogFlag: false
+    openAddChatRoomMemberDialogFlag: false,
+    openAddChatRoomAdminDialogFlag: false
 }
 
 const roomReducer = (state = initialState, action) =>
 {
     switch(action.type)
     {
-        case ADD_MEMBER_TO_ROOM:
+        case TOGGLE_ADD_MEMBER_TO_ROOM:
             return {
                 ...state,
-                toggleAddChatRoomMemberDialogFlag: !toggleAddChatRoomMemberDialogFlag
+                openAddChatRoomMemberDialogFlag: !state.openAddChatRoomMemberDialogFlag
             }
-        case ADD_ADMIN_TO_ROOM:
+        case TOGGLE_ADD_ADMIN_TO_ROOM:
             return {
                 ...state,
-                toggleAddChatRoomAdminDialogFlag: !toggleAddChatRoomAdminDialogFlag
+                openAddChatRoomAdminDialogFlag: !state.openAddChatRoomAdminDialogFlag
             }
         case FETCH_ROOM_CONVERSATION:
             return {

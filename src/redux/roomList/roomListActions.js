@@ -1,5 +1,5 @@
 import {
-    CREATE_ROOM, CLOSE_ROOM, SELECT_ROOM,
+    CLOSE_ROOM, SELECT_ROOM,
     FETCH_ROOMS_REQUEST, FETCH_ROOMS_REQUEST_SUCCESS,
     FETCH_ROOMS_REQUEST_FAILURE, ADD_ROOM_TO_FAVOURITES,
     TOGGLE_CREATE_ROOM_DIALOG
@@ -7,14 +7,14 @@ import {
 
 import axios from "axios";
 
-export const toggleCreateRoomDialogFlagRequest = () =>
+const toggleCreateRoomDialogFlagRequest = () =>
 {
     return {
         type: TOGGLE_CREATE_ROOM_DIALOG
     }
 }
 
-export const closeRoomRequest = (roomId) =>
+const closeRoomRequest = (roomId) =>
 {
     return {
         type: CLOSE_ROOM,
@@ -22,7 +22,7 @@ export const closeRoomRequest = (roomId) =>
     }
 }
 
-export const selectRoomRequest = (roomId) =>
+const selectRoomRequest = (roomId) =>
 {
     return {
         type: SELECT_ROOM,
@@ -30,7 +30,7 @@ export const selectRoomRequest = (roomId) =>
     }
 }
 
-export const addRoomToFavouritesRequest = (roomId) =>
+const addRoomToFavouritesRequest = (roomId) =>
 {
     return {
         type: ADD_ROOM_TO_FAVOURITES,
@@ -38,14 +38,14 @@ export const addRoomToFavouritesRequest = (roomId) =>
     }
 }
 
-export const fetchRoomsRequest = () =>
+const fetchRoomsRequest = () =>
 {
     return {
         type: FETCH_ROOMS_REQUEST
     }
 }
 
-export const fetchRoomsRequestSuccess = (rooms) =>
+const fetchRoomsRequestSuccess = (rooms) =>
 {
     return {
         type: FETCH_ROOMS_REQUEST_SUCCESS,
@@ -53,7 +53,7 @@ export const fetchRoomsRequestSuccess = (rooms) =>
     }
 }
 
-export const fetchRoomsRequestFailure = (error) =>
+const fetchRoomsRequestFailure = (error) =>
 {
     return {
         type: FETCH_ROOMS_REQUEST_FAILURE,
