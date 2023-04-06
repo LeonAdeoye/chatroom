@@ -1,8 +1,32 @@
 import {
-    CLOSE_ROOM, SELECT_ROOM,
-    FETCH_ROOMS_REQUEST, FETCH_ROOMS_REQUEST_SUCCESS,
-    FETCH_ROOMS_REQUEST_FAILURE, ADD_ROOM_TO_FAVOURITES,
-    TOGGLE_CREATE_ROOM_DIALOG
+    CLOSE_ROOM,
+
+    CREATE_ROOM_REQUEST,
+    CREATE_ROOM_REQUEST_SUCCESS,
+    CREATE_ROOM_REQUEST_FAILURE,
+
+    FETCH_ROOMS_REQUEST,
+    FETCH_ROOMS_REQUEST_SUCCESS,
+    FETCH_ROOMS_REQUEST_FAILURE,
+
+    ADD_ROOM_TO_FAVOURITES,
+    TOGGLE_CREATE_ROOM_DIALOG,
+
+    SELECT_ROOM_REQUEST,
+    SELECT_ROOM_REQUEST_SUCCESS,
+    SELECT_ROOM_REQUEST_FAILURE,
+
+    FETCH_ROOM_CONVERSATION_REQUEST,
+    FETCH_ROOM_CONVERSATION_REQUEST_SUCCESS,
+    FETCH_ROOM_CONVERSATION_REQUEST_FAILURE,
+
+    ADD_ADMIN_TO_ROOM_REQUEST,
+    ADD_ADMIN_TO_ROOM_REQUEST_SUCCESS,
+    ADD_ADMIN_TO_ROOM_REQUEST_FAILURE,
+
+    ADD_MEMBER_TO_ROOM_REQUEST,
+    ADD_MEMBER_TO_ROOM_REQUEST_SUCCESS,
+    ADD_MEMBER_TO_ROOM_REQUEST_FAILURE
 } from "./roomListTypes";
 
 import axios from "axios";
@@ -22,11 +46,26 @@ const closeRoomRequest = (roomId) =>
     }
 }
 
-const selectRoomRequest = (roomId) =>
+const selectRoomRequest = () =>
 {
     return {
-        type: SELECT_ROOM,
-        payload: roomId
+        type: SELECT_ROOM_REQUEST
+    }
+}
+
+const selectRoomRequestSuccess = (selectedRoom) =>
+{
+    return {
+        type: SELECT_ROOM_REQUEST_SUCCESS,
+        payload: selectedRoom
+    }
+}
+
+const selectRoomRequestFailure = (error) =>
+{
+    return {
+        type: SELECT_ROOM_REQUEST_FAILURE,
+        payload: error
     }
 }
 
@@ -45,11 +84,11 @@ const fetchRoomsRequest = () =>
     }
 }
 
-const fetchRoomsRequestSuccess = (rooms) =>
+const fetchRoomsRequestSuccess = (fetchedRoom) =>
 {
     return {
         type: FETCH_ROOMS_REQUEST_SUCCESS,
-        payload: rooms
+        payload: fetchedRoom
     }
 }
 
@@ -60,6 +99,99 @@ const fetchRoomsRequestFailure = (error) =>
         payload: error
     }
 }
+
+const createNewRoomRequest = () =>
+{
+    return {
+        type: CREATE_ROOM_REQUEST
+    }
+}
+
+const createNewRoomRequestSuccess = (room) =>
+{
+    return {
+        type: CREATE_ROOM_REQUEST_SUCCESS,
+        payload: room
+    }
+}
+
+const createNewRoomRequestFailure = (error) =>
+{
+    return {
+        type: CREATE_ROOM_REQUEST_FAILURE,
+        payload: error
+    }
+}
+
+const addMemberToRoomRequest = () =>
+{
+    return {
+        type: ADD_MEMBER_TO_ROOM_REQUEST
+    }
+}
+
+const addMemberToRoomRequestSuccess = (updatedRoom) =>
+{
+    return {
+        type: ADD_MEMBER_TO_ROOM_REQUEST_SUCCESS,
+        payload: updatedRoom
+    }
+}
+
+const addMemberToRoomRequestFailure = (error) =>
+{
+    return {
+        type: ADD_MEMBER_TO_ROOM_REQUEST_FAILURE,
+        payload: error
+    }
+}
+
+const addAdminToRoomRequest = () =>
+{
+    return {
+        type: ADD_ADMIN_TO_ROOM_REQUEST
+    }
+}
+
+const addAdminToRoomRequestSuccess = (updatedRoom) =>
+{
+    return {
+        type: ADD_ADMIN_TO_ROOM_REQUEST_SUCCESS,
+        payload: updatedRoom
+    }
+}
+
+const addAdminToRoomRequestFailure = (error) =>
+{
+    return {
+        type: ADD_ADMIN_TO_ROOM_REQUEST_FAILURE,
+        payload: error
+    }
+}
+
+const fetchConversationRequest = () =>
+{
+    return {
+        type: FETCH_ROOM_CONVERSATION_REQUEST
+    }
+}
+
+const fetchConversationRequestSuccess = (conversation) =>
+{
+    return {
+        type: FETCH_ROOM_CONVERSATION_REQUEST_SUCCESS,
+        payload: conversation
+    }
+}
+
+const fetchConversationRequestFailure = (error) =>
+{
+    return {
+        type: FETCH_ROOM_CONVERSATION_REQUEST_FAILURE,
+        payload: error
+    }
+}
+
 
 export const closeRoom = (roomId) =>
 {
@@ -81,21 +213,32 @@ export const selectRoom = (selectedRoomIndex) =>
 {
     return function(dispatch)
     {
-        dispatch(selectRoomRequest(selectedRoomIndex));
+        dispatch(selectRoomRequest());
+        axios.get('http://localhost:8080/room?roomId=' + selectedRoomIndex)
+            .then(response =>
+            {
+                const selectedRoom = response.data;
+                console.log('Selected Room: ', selectedRoom);
+                dispatch(selectRoomRequestSuccess(selectedRoom));
+            })
+            .catch(err =>
+            {
+                console.log('error: ', err);
+                dispatch(selectRoomRequestFailure(err.message));
+            });
     }
 }
-
 
 export const fetchRooms = () =>
 {
     return function(dispatch)
     {
         dispatch(fetchRoomsRequest());
-        axios.get('https://jsonplaceholder.typicode.com/users')
+        axios.get('http://localhost:8080/rooms')
             .then(response =>
             {
-                console.log('rooms: ', response.data);
                 const rooms = response.data;
+                console.log('fetched Rooms: ', rooms);
                 dispatch(fetchRoomsRequestSuccess(rooms));
             })
             .catch(err =>
@@ -111,5 +254,76 @@ export const toggleCreateRoomDialogFlag = () =>
     return function(dispatch)
     {
         dispatch(toggleCreateRoomDialogFlagRequest());
+    }
+}
+
+export const createNewRoom = (roomName, loggedInUserId) =>
+{
+    return function(dispatch)
+    {
+        dispatch(createNewRoomRequest())
+        axios.post('http://localhost:8080/addRoom', { ownerId: loggedInUserId, roomName: roomName})
+            .then(response =>
+            {
+                const room = response.data;
+                console.log('New created room: ', room);
+                dispatch(createNewRoomRequestSuccess(room));
+            })
+            .catch(err =>
+            {
+                console.log('error: ', err);
+                dispatch(createNewRoomRequestFailure(err.message));
+            });
+    }
+}
+
+export const addMemberToRoom = (roomId, newRoomMemberId, loggedInUserId) =>
+{
+    return function(dispatch)
+    {
+        dispatch(addMemberToRoomRequest())
+        axios.post(`http://localhost:8080/addMember?roomId=${roomId}&newMemberId=${newRoomMemberId}&instigatorId=${loggedInUserId}`)
+            .then(response =>
+            {
+                dispatch(addMemberToRoomRequestSuccess(response.data));
+            })
+            .catch(err =>
+            {
+                dispatch(addMemberToRoomRequestFailure(err.message));
+            });
+    }
+}
+
+export const addAdminToRoom = (roomId, newRoomAdminId, loggedInUserId) =>
+{
+    return function(dispatch)
+    {
+        dispatch(addAdminToRoomRequest())
+        axios.post(`http://localhost:8080/addAdmin?roomId=${roomId}&newAdminId=${newRoomAdminId}&instigatorId=${loggedInUserId}`)
+            .then(response =>
+            {
+                dispatch(addAdminToRoomRequestSuccess(response.data));
+            })
+            .catch(err =>
+            {
+                dispatch(addAdminToRoomRequestFailure(err.message));
+            });
+    }
+}
+
+export const fetchConversation = (selectedRoomIndex) =>
+{
+    return function(dispatch)
+    {
+        dispatch(fetchConversationRequest(selectedRoomIndex));
+        axios.get(`http://localhost:8080/conversation?roomId=${selectedRoomIndex}&startOffset=0&endOffset=1`)
+            .then(response =>
+            {
+                dispatch(fetchConversationRequestSuccess(response.data));
+            })
+            .catch(err =>
+            {
+                dispatch(fetchConversationRequestFailure(err.message));
+            });
     }
 }

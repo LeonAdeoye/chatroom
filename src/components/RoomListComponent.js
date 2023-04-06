@@ -10,7 +10,7 @@ class RoomListComponent extends Component
 {
     render()
     {
-        const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag} = this.props;
+        const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag, rooms} = this.props;
 
         const handleClick = () =>
         {
@@ -33,7 +33,7 @@ class RoomListComponent extends Component
                         </IconButton>
                     </Tooltip>
                 </Stack>
-                 {this.props.rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}
+                 {rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}
             </div>
         );
     }

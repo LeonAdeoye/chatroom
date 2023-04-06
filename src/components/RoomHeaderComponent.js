@@ -4,14 +4,14 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
 import {connect} from "react-redux";
 import {toggleAddChatRoomAdminDialogFlag, toggleAddChatRoomMemberDialogFlag} from "../redux/room/roomActions";
-import AddChatRoomAdminDialog from "./AddChatRoomAdminDialog";
-import AddChatRoomMemberDialog from "./AddChatRoomMemberDialog";
+import AddChatRoomAdminDialogComponent from "./AddChatRoomAdminDialogComponent";
+import AddChatRoomMemberDialogComponent from "./AddChatRoomMemberDialogComponent";
 
 class RoomHeaderComponent extends Component
 {
     render()
     {
-        const {openAddChatRoomAdminDialogFlag, openAddChatRoomMemberDialogFlag, toggleAddChatRoomAdminDialogFlag, toggleAddChatRoomMemberDialogFlag} = this.props;
+        const {selectedRoom, openAddChatRoomAdminDialogFlag, openAddChatRoomMemberDialogFlag, toggleAddChatRoomAdminDialogFlag, toggleAddChatRoomMemberDialogFlag} = this.props;
 
         const handleAddAdminClick = () =>
         {
@@ -25,10 +25,10 @@ class RoomHeaderComponent extends Component
 
         return (
             <div>
-                {openAddChatRoomAdminDialogFlag ? <AddChatRoomAdminDialog/> : null}
-                {openAddChatRoomMemberDialogFlag ? <AddChatRoomMemberDialog/> : null}
+                {openAddChatRoomAdminDialogFlag ? <AddChatRoomAdminDialogComponent room={selectedRoom}/> : null}
+                {openAddChatRoomMemberDialogFlag ? <AddChatRoomMemberDialogComponent room={selectedRoom}/> : null}
                 <Stack width={'100%'} sx={{ border:1, borderColor:'white', backgroundColor:'#363535'}}>
-                    <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{this.props.roomName}</Typography></Box>
+                    <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{selectedRoom.roomName}</Typography></Box>
                     <Stack direction='row'>
                         <Tooltip title={<Typography fontSize={20}>Add a new member to the chat room.</Typography>}>
                             <IconButton size='small' onClick={handleAddMemberClick} sx={{ color: 'white'}}>
@@ -40,7 +40,8 @@ class RoomHeaderComponent extends Component
                                 <AddModeratorIcon/>
                             </IconButton>
                         </Tooltip>
-                        <Typography sx={{color:'lightgrey'}}  variant="subtitle2">members: {this.props.memberCount}</Typography>
+                        <Typography sx={{color:'lightgreen'}}  variant="subtitle2">Members: [{selectedRoom.members.length}]</Typography>
+                        <Typography sx={{color:'red'}}  variant="subtitle2">Admins: [{selectedRoom.administrators.length}]</Typography>
                     </Stack>
                 </Stack>
             </div>
@@ -54,7 +55,8 @@ const mapStateToProps = (state, ownProps) =>
 {
     return {
         openAddChatRoomAdminDialogFlag: state.room.openAddChatRoomAdminDialogFlag,
-        openAddChatRoomMemberDialogFlag: state.room.openAddChatRoomMemberDialogFlag
+        openAddChatRoomMemberDialogFlag: state.room.openAddChatRoomMemberDialogFlag,
+        selectedRoom: state.roomList.selectedRoom
     }
 }
 

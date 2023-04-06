@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {fetchConversation} from "../redux/room/roomActions";
-import {addRoomToFavourites, closeRoom, selectRoom} from "../redux/roomList/roomListActions";
+import {addRoomToFavourites, closeRoom, fetchConversation, selectRoom} from "../redux/roomList/roomListActions";
 import {Box, Grid, IconButton, Tooltip, Typography} from '@mui/material'
 import StarBorderPurple500RoundedIcon from '@mui/icons-material/StarBorderPurple500Rounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
@@ -14,12 +13,13 @@ class RoomComponent extends Component
 
         const handleFetchConversation = () =>
         {
-            fetchConversation();
             selectRoom();
+            fetchConversation();
         }
 
         const handleCloseRoom = () => closeRoom();
         const handleAddToFavourites = () => addToFavourites();
+
         return (
             <>
                 <Box sx={{

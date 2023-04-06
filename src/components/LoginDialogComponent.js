@@ -1,35 +1,42 @@
 import React, {Component} from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
 import {connect} from "react-redux";
-import {toggleAddChatRoomMemberDialogFlag} from "../redux/room/roomActions";
+import {addUser, fetchUsers, loginUser, toggleOpenLoginDialogFlag} from "../redux/user/userActions";
 
-class AddChatRoomMemberDialog extends Component
+class LoginDialogComponent extends Component
 {
     constructor(props)
     {
         super(props);
         this.state = {
-            newRoomMember: ''
+            fullName: ''
         }
+    }
+
+    componentDidMount()
+    {
+        this.props.fetchUsers();
     }
 
     render()
     {
-        const {openAddChatRoomMemberDialogFlag, toggleAddChatRoomMemberDialogFlag} = this.props;
+        const {openLoginDialogFlag, toggleOpenLoginDialogFlag, loginUser, users, addUser} = this.props;
 
         const handleOnChangeEvent = (event) =>
         {
-            this.setState({newRoomMember: event.target.value})
-        }
-
-        const handleCancel= () =>
-        {
-            toggleAddChatRoomMemberDialogFlag();
+            this.setState({fullName: event.target.value});
         }
 
         const handleSubmit = () =>
         {
-            toggleAddChatRoomMemberDialogFlag();
+            let loginFullName = this.state.fullName;
+
+            if(users.filter(user => user.fullName === loginFullName).length > 0)
+                loginUser(loginFullName);
+            else
+                addUser(loginFullName);
+
+            toggleOpenLoginDialogFlag();
         }
 
         return (
@@ -38,11 +45,10 @@ class AddChatRoomMemberDialog extends Component
                         width='400px'
                         height='80px'
                         sx={{ backgroundColor: '#404040'}}
-                        open={openAddChatRoomMemberDialogFlag}
-                        onClose={() => this.setState({ newRoomMember: ''} )}>
-                    <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Add New Chat Member</DialogTitle>
+                        open={openLoginDialogFlag}>
+                    <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Login To Chat Rooms</DialogTitle>
                     <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}}>
-                        <TextField label='Select the name new member...'
+                        <TextField label='Enter your full name...'
                                    variant='outlined'
                                    width='70%'
                                    size="small"
@@ -55,11 +61,7 @@ class AddChatRoomMemberDialog extends Component
                         <Button variant='outlined' sx={{ backgroundColor: '#404040', borderColor:'white', color: 'white', '&:hover': {
                                 backgroundColor: '#4f4e4e',
                                 borderColor:'white'
-                            }}} onClick={handleCancel}>Cancel</Button>
-                        <Button variant='outlined' sx={{ backgroundColor: '#404040', borderColor:'white', color: 'white', '&:hover': {
-                                backgroundColor: '#4f4e4e',
-                                borderColor:'white'
-                            }}} autoFocus onClick={handleSubmit}>Submit</Button>
+                            }}} autoFocus onClick={handleSubmit}>Login</Button>
                     </DialogActions>
                 </Dialog>
             </div>
@@ -67,20 +69,22 @@ class AddChatRoomMemberDialog extends Component
     }
 }
 
-// The second parameter is props of the component itself passed in by the parent.
-// By convention, the second parameter is called ownProps.
 const mapStateToProps = (state) =>
 {
     return {
-        openAddChatRoomMemberDialogFlag: state.room.openAddChatRoomMemberDialogFlag
+        openLoginDialogFlag: state.user.openLoginDialogFlag,
+        users: state.user.users
     }
 }
 
 const mapDispatchToProps = (dispatch) =>
 {
     return {
-        toggleAddChatRoomMemberDialogFlag: () => dispatch(toggleAddChatRoomMemberDialogFlag())
+        toggleOpenLoginDialogFlag: () => dispatch(toggleOpenLoginDialogFlag()),
+        loginUser: (fullName) => dispatch(loginUser(fullName)),
+        fetchUsers: () => dispatch(fetchUsers()),
+        addUser: (fullName) => dispatch(addUser(fullName))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps) (AddChatRoomMemberDialog);
+export default connect(mapStateToProps, mapDispatchToProps) (LoginDialogComponent);

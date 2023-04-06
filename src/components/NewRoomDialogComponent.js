@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
-import {toggleCreateRoomDialogFlag} from "../redux/roomList/roomListActions";
+import {createNewRoom, toggleCreateRoomDialogFlag} from "../redux/roomList/roomListActions";
 import {connect} from "react-redux";
 
 class NewRoomDialogComponent extends Component
@@ -15,7 +15,7 @@ class NewRoomDialogComponent extends Component
 
     render()
     {
-        const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag} = this.props;
+        const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag, createNewRoom, loggedInUserId} = this.props;
 
         const handleOnChangeEvent = (event) =>
         {
@@ -30,6 +30,7 @@ class NewRoomDialogComponent extends Component
         const handleSubmit = () =>
         {
             toggleCreateRoomDialogFlag();
+            createNewRoom(this.state.roomName, loggedInUserId);
         }
 
         return (
@@ -38,8 +39,7 @@ class NewRoomDialogComponent extends Component
                         width='400px'
                         height='80px'
                         sx={{ backgroundColor: '#404040'}}
-                        open={openCreateRoomDialogFlag}
-                        onClose={() => this.setState({ roomName: ''} )}>
+                        open={openCreateRoomDialogFlag}>
                     <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Add New Chat Room</DialogTitle>
                     <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}}>
                         <TextField label='Enter the name of the chat room...'
@@ -72,14 +72,16 @@ class NewRoomDialogComponent extends Component
 const mapStateToProps = (state) =>
 {
     return {
-        openCreateRoomDialogFlag: state.roomList.openCreateRoomDialogFlag
+        openCreateRoomDialogFlag: state.roomList.openCreateRoomDialogFlag,
+        loggedInUserId: state.user.loggedInUserId
     }
 }
 
 const mapDispatchToProps = (dispatch) =>
 {
     return {
-        toggleCreateRoomDialogFlag: () => dispatch(toggleCreateRoomDialogFlag())
+        toggleCreateRoomDialogFlag: () => dispatch(toggleCreateRoomDialogFlag()),
+        createNewRoom: (roomName, loggedInUserId) => dispatch(createNewRoom(roomName, loggedInUserId))
     }
 }
 
