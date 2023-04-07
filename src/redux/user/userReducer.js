@@ -21,7 +21,7 @@ const userReducer = (state = initialState, action) =>
         case USER_LOGGED_IN:
             return {
                 ...state,
-                loggedInUserId: state.users.find(user => user.fullName === action.payload).id
+                loggedInUserId: action.payload
             }
         case TOGGLE_USER_LOGIN_DIALOG:
             return {

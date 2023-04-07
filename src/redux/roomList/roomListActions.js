@@ -320,7 +320,7 @@ export const addMemberToRoom = (roomId, newRoomMemberId, loggedInUserId) =>
         axios.post(`http://localhost:8080/addMember?roomId=${roomId}&newMemberId=${newRoomMemberId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                dispatch(addMemberToRoomRequestSuccess(response.data));
+                dispatch(addMemberToRoomRequestSuccess(newRoomMemberId));
             })
             .catch(err =>
             {
@@ -337,7 +337,7 @@ export const addAdminToRoom = (roomId, newRoomAdminId, loggedInUserId) =>
         axios.post(`http://localhost:8080/addAdmin?roomId=${roomId}&newAdminId=${newRoomAdminId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                dispatch(addAdminToRoomRequestSuccess(response.data));
+                dispatch(addAdminToRoomRequestSuccess(newRoomAdminId));
             })
             .catch(err =>
             {

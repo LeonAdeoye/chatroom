@@ -56,11 +56,11 @@ const fetchUserRequestFailure = (error) =>
     }
 }
 
-const loginUserRequest = (loggedInUserFullName) =>
+const loginUserRequest = (loggedInUserId) =>
 {
     return {
         type: USER_LOGGED_IN,
-        payload: loggedInUserFullName
+        payload: loggedInUserId
     }
 }
 
@@ -96,11 +96,11 @@ export const fetchUsers = () =>
     }
 }
 
-export const loginUser = (fullName) =>
+export const loginUser = (userId) =>
 {
     return function(dispatch)
     {
-        dispatch(loginUserRequest(fullName));
+        dispatch(loginUserRequest(userId));
     }
 }
 

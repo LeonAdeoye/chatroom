@@ -30,8 +30,9 @@ class LoginDialogComponent extends Component
         const handleSubmit = () =>
         {
             let loginFullName = this.state.fullName;
-            let result = users.includes(user => user.fullName === loginFullName);
-            if(result) // TODO
+            let result = users.find(user => user.fullName === loginFullName);
+
+            if(result !== undefined)
                 loginUser(result.id);
             else
                 addUser(loginFullName);
@@ -81,7 +82,7 @@ const mapDispatchToProps = (dispatch) =>
 {
     return {
         toggleOpenLoginDialogFlag: () => dispatch(toggleOpenLoginDialogFlag()),
-        loginUser: (fullName) => dispatch(loginUser(fullName)),
+        loginUser: (userId) => dispatch(loginUser(userId)),
         fetchUsers: () => dispatch(fetchUsers()),
         addUser: (fullName) => dispatch(addUser(fullName))
     }

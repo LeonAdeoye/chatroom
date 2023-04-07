@@ -12,7 +12,7 @@ class AddChatRoomMemberDialogComponent extends Component
     {
         super(props);
         this.state = {
-            newRoomMemberId: ''
+            newRoomMemberFullName: ''
         }
     }
 
@@ -27,7 +27,7 @@ class AddChatRoomMemberDialogComponent extends Component
 
         const handleOnChangeEvent = (event, newValue) =>
         {
-            this.setState({newRoomMemberId: newValue});
+            this.setState({newRoomMemberFullName: newValue});
         }
 
         const handleCancel= () =>
@@ -38,7 +38,8 @@ class AddChatRoomMemberDialogComponent extends Component
         const handleSubmit = () =>
         {
             toggleAddChatRoomMemberDialogFlag();
-            addMemberToRoom(selectedRoom.id, this.state.newRoomMemberId, loggedInUserId);
+            let newRoomMemberId = users.find(user => user.fullName === this.state.newRoomMemberFullName).id
+            addMemberToRoom(selectedRoom.id, newRoomMemberId, loggedInUserId);
         }
 
         return (
@@ -53,7 +54,7 @@ class AddChatRoomMemberDialogComponent extends Component
                         <Autocomplete size='small'
                                       renderInput={(params) => <TextField {...params} label='Select member to add room' />}
                                       options={users.map(user => user.fullName)}
-                                      value={this.state.newRoomMemberId}
+                                      value={this.state.newRoomMemberFullName}
                                       onChange={handleOnChangeEvent}
                                       freeSolo
                                       variant='outlined'

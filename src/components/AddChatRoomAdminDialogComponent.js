@@ -12,7 +12,7 @@ class AddChatRoomAdminDialogComponent extends Component
     {
         super(props);
         this.state = {
-            newRoomAdminId: ''
+            newRoomAdminFullName: ''
         }
     }
 
@@ -27,7 +27,7 @@ class AddChatRoomAdminDialogComponent extends Component
 
         const handleOnChangeEvent = (event) =>
         {
-            this.setState({newRoomAdminId: event.target.value})
+            this.setState({newRoomAdminFullName: event.target.value})
         }
 
         const handleCancel= () =>
@@ -38,7 +38,8 @@ class AddChatRoomAdminDialogComponent extends Component
         const handleSubmit = () =>
         {
             toggleAddChatRoomAdminDialogFlag();
-            addAdminToRoom(selectedRoom.id, this.state.newRoomAdminId, loggedInUserId);
+            let newRoomAdminId = users.find(user => user.fullName === this.state.newRoomMemberFullName).id
+            addAdminToRoom(selectedRoom.id, newRoomAdminId, loggedInUserId);
         }
 
         return (
@@ -53,7 +54,7 @@ class AddChatRoomAdminDialogComponent extends Component
                         <Autocomplete size='small'
                                       renderInput={(params) => <TextField {...params} label='Select administrator to add room' />}
                                       options={users}
-                                      value={this.state.newRoomAdminId}
+                                      value={this.state.newRoomMemberFullName}
                                       onChange={handleOnChangeEvent}
                                       freeSolo
                                       variant='outlined'
