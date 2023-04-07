@@ -27,7 +27,11 @@ import {
 
     ADD_MEMBER_TO_ROOM_REQUEST,
     ADD_MEMBER_TO_ROOM_REQUEST_SUCCESS,
-    ADD_MEMBER_TO_ROOM_REQUEST_FAILURE
+    ADD_MEMBER_TO_ROOM_REQUEST_FAILURE,
+
+    CREATE_CHAT_MESSAGE_REQUEST,
+    CREATE_CHAT_MESSAGE_REQUEST_FAILURE,
+    CREATE_CHAT_MESSAGE_REQUEST_SUCCESS
 } from "./roomListTypes";
 
 const initialState =
@@ -43,6 +47,27 @@ const roomListReducer = (state = initialState, action) =>
 {
     switch(action.type)
     {
+        case CREATE_CHAT_MESSAGE_REQUEST:
+            return {
+                ...state,
+                errorMessage: '',
+                loading: true
+            }
+        case CREATE_CHAT_MESSAGE_REQUEST_SUCCESS:
+            const converseRoom = state.selectedRoom;
+            converseRoom.members = action.payload;
+            return {
+                ...state,
+                errorMessage: '',
+                loading: false,
+                selectedRoom: converseRoom
+            }
+        case CREATE_CHAT_MESSAGE_REQUEST_FAILURE:
+            return {
+                ...state,
+                errorMessage: action.payload,
+                loading: false
+            }
         case CREATE_ROOM_REQUEST:
             return {
                 ...state,

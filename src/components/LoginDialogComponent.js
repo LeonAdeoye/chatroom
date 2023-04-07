@@ -30,9 +30,9 @@ class LoginDialogComponent extends Component
         const handleSubmit = () =>
         {
             let loginFullName = this.state.fullName;
-
-            if(users.filter(user => user.fullName === loginFullName).length > 0)
-                loginUser(loginFullName);
+            let result = users.includes(user => user.fullName === loginFullName);
+            if(result) // TODO
+                loginUser(result.id);
             else
                 addUser(loginFullName);
 

@@ -12,7 +12,7 @@ class ConversationComponent extends Component
         return (
             selectedRoom && selectedRoom.conversation ? (<Box>
                 <RoomHeaderComponent roomName={selectedRoom.name} memberCount={selectedRoom.memberCount}/>
-                {selectedRoom.conversation.map((chatMessage) => <ChatMessageComponent key={chatMessage.id} index={chatMessage.id} chatMessage={chatMessage}/>)}
+                {selectedRoom.conversation.map((chatMessage) => <ChatMessageComponent key={chatMessage.id} chatMessage={chatMessage}/>)}
             </Box>) : null
         );
     }

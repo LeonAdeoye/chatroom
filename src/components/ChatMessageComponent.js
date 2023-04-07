@@ -7,8 +7,9 @@ class ChatMessageComponent extends Component
 {
     render()
     {
-        const {selectChatMessage, chatMessage, myChatMessageIndex, selectedChatMessageIndex} = this.props;
+        const {selectChatMessage, chatMessage, myChatMessageIndex, selectedChatMessageIndex, timeStamp, authorId, users} = this.props;
         const handleSelectChatMessage = () => selectChatMessage();
+        //  <Box mr={2}><Typography sx={{fontWeight: 'bold'}}>{users.find(user => user.id === authorId)}:</Typography></Box> //TODO
         return (
             <div>
                 <Stack sx={{
@@ -19,8 +20,7 @@ class ChatMessageComponent extends Component
                        direction='row'
                        onClick={handleSelectChatMessage}
                        bgcolor={selectedChatMessageIndex === myChatMessageIndex ? '#2c2929' : '#404040'}>
-                    <Box ml={2} mr={2}><Typography fontSize='4' fontFamily='Arial' color='lightgrey'>09:45 AM</Typography></Box>
-                    <Box mr={2}><Typography sx={{fontWeight: 'bold'}}>Leon Adeoye:</Typography></Box>
+                    <Box ml={2} mr={2}><Typography fontSize='4' fontFamily='Arial' color='lightgrey'>{timeStamp}</Typography></Box>
                     <Box><Typography fontFamily='cursive' color='lightgrey'>{chatMessage}</Typography></Box>
                 </Stack>
             </div>
@@ -31,9 +31,12 @@ class ChatMessageComponent extends Component
 const mapStateToProps = (state, ownProps) =>
 {
     return {
-        chatMessage: ownProps.chatMessage.title,
-        myChatMessageIndex: ownProps.index,
-        selectedChatMessageIndex: state.chatMessage.selectedChatMessageIndex
+        chatMessage: ownProps.chatMessage.content,
+        myChatMessageIndex: ownProps.chatMessage.id,
+        authorId: ownProps.chatMessage.authorId,
+        timeStamp:ownProps.chatMessage.timeStamp,
+        selectedChatMessageIndex: state.chatMessage.selectedChatMessageIndex,
+        users: state.user.users
     }
 }
 

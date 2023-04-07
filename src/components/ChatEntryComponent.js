@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import {createChatMessage} from "../redux/chatEntry/chatEntryActions";
 import {connect} from "react-redux";
 import {Stack, IconButton, Tooltip, Typography} from '@mui/material'
 import SendIcon from '@mui/icons-material/Send';
 import ArticleIcon from '@mui/icons-material/Article';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
+import {createChatMessage} from "../redux/roomList/roomListActions";
 
 class ChatEntryComponent extends Component
 {
@@ -17,13 +17,11 @@ class ChatEntryComponent extends Component
     }
     render()
     {
-        const {createChatMessage} = this.props;
-        const handleSendNewChatMessage = () =>
+        const {createChatMessage, selectedRoom, loggedInUserId} = this.props;
+
+        const submitNewChatMessage = () =>
         {
-            createChatMessage(this.state.newChatMessage);
-            this.setState({
-                newChatMessage: ""
-            });
+            createChatMessage(selectedRoom.id, this.state.newChatMessage, loggedInUserId);
         }
 
         const handleOnChangeNewChatMessage = (event) =>
@@ -49,7 +47,7 @@ class ChatEntryComponent extends Component
                             inputProps={{ 'aria-label': 'enter chat' }}
                         />
                         <Tooltip title={<Typography fontSize={20}>Send your chat message.</Typography>}>
-                            <IconButton size='small' onClick={handleSendNewChatMessage} sx={{color:'white'}}>
+                            <IconButton size='small' onClick={submitNewChatMessage} sx={{color:'white'}}>
                                 <SendIcon/>
                             </IconButton>
                         </Tooltip>
@@ -62,17 +60,18 @@ class ChatEntryComponent extends Component
 
 // The second parameter is props of the component itself passed in by the parent.
 // By convention, the second parameter is called ownProps.
-const mapStateToProps = (state, ownProps) =>
+const mapStateToProps = (state) =>
 {
     return {
-        chatMessage: state.chatEntry.chatMessage
+        selectedRoom: state.roomList.selectedRoom,
+        loggedInUserId: state.user.loggedInUserId
     }
 }
 
 const mapDispatchToProps = (dispatch) =>
 {
     return {
-        createChatMessage: (newChatMessage) => dispatch(createChatMessage(newChatMessage))
+        createChatMessage: (roomId, newChatMessage, loggedInUserId) => dispatch(createChatMessage(roomId, newChatMessage, loggedInUserId))
     }
 }
 
