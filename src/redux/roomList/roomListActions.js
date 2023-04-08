@@ -138,7 +138,7 @@ const addMemberToRoomRequestSuccess = (updatedRoom) =>
 {
     return {
         type: ADD_MEMBER_TO_ROOM_REQUEST_SUCCESS,
-        payload: updatedRoom
+        payload: updatedRoom // TODO: update rooms with this one
     }
 }
 
@@ -161,7 +161,7 @@ const addAdminToRoomRequestSuccess = (updatedRoom) =>
 {
     return {
         type: ADD_ADMIN_TO_ROOM_REQUEST_SUCCESS,
-        payload: updatedRoom
+        payload: updatedRoom // TODO: update rooms with this one
     }
 }
 
@@ -320,7 +320,7 @@ export const addMemberToRoom = (roomId, newRoomMemberId, loggedInUserId) =>
         axios.post(`http://localhost:8080/addMember?roomId=${roomId}&newMemberId=${newRoomMemberId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                dispatch(addMemberToRoomRequestSuccess(newRoomMemberId));
+                dispatch(addMemberToRoomRequestSuccess(response.data));
             })
             .catch(err =>
             {
@@ -337,7 +337,7 @@ export const addAdminToRoom = (roomId, newRoomAdminId, loggedInUserId) =>
         axios.post(`http://localhost:8080/addAdmin?roomId=${roomId}&newAdminId=${newRoomAdminId}&instigatorId=${loggedInUserId}`)
             .then(response =>
             {
-                dispatch(addAdminToRoomRequestSuccess(newRoomAdminId));
+                dispatch(addAdminToRoomRequestSuccess(response.data));
             })
             .catch(err =>
             {

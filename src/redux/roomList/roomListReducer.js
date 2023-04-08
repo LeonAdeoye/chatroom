@@ -133,7 +133,7 @@ const roomListReducer = (state = initialState, action) =>
                 loading: true
             }
         case ADD_ROOM_TO_FAVOURITES:
-            // TODO: find room in array and add it to favourites it.
+            // TODO: find room in array and add to favourites it.
             return {
                 ...state
             }
@@ -162,8 +162,7 @@ const roomListReducer = (state = initialState, action) =>
             return {
                 ...state,
                 loading: true,
-                errorMessage: '',
-                members: []
+                errorMessage: ''
             }
         case ADD_MEMBER_TO_ROOM_REQUEST_SUCCESS:
             const memberRoom = state.selectedRoom;
@@ -173,7 +172,6 @@ const roomListReducer = (state = initialState, action) =>
                 loading: false,
                 errorMessage: '',
                 selectedRoom: memberRoom
-
             }
         case ADD_MEMBER_TO_ROOM_REQUEST_FAILURE:
             return {
@@ -189,7 +187,7 @@ const roomListReducer = (state = initialState, action) =>
             }
         case ADD_ADMIN_TO_ROOM_REQUEST_SUCCESS:
             const adminRoom = state.selectedRoom;
-            adminRoom.members = action.payload;
+            adminRoom.administrators = action.payload;
             return {
                 ...state,
                 loading: false,

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField} from '@mui/material'
 import {connect} from "react-redux";
 import {toggleAddChatRoomMemberDialogFlag} from "../redux/room/roomActions";
-import {Autocomplete} from "@mui/lab";
+import {Autocomplete } from '@mui/material'
 import {fetchUsers} from "../redux/user/userActions";
 import {addMemberToRoom} from "../redux/roomList/roomListActions";
 
@@ -52,16 +52,17 @@ class AddChatRoomMemberDialogComponent extends Component
                     <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >New Member In {selectedRoom.roomName}</DialogTitle>
                     <DialogContent sx={{ width: '500px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}}>
                         <Autocomplete size='small'
-                                      renderInput={(params) => <TextField {...params} label='Select member to add room' />}
+                                      renderInput={(params) => <TextField {...params}
+                                                                          label='Select member to add to room'
+                                                                          InputLabelProps={{ style: { color: 'white' } }}
+                                                                          InputProps={{ style: { color: 'white'} }}/>}
                                       options={users.map(user => user.fullName)}
                                       value={this.state.newRoomMemberFullName}
                                       onChange={handleOnChangeEvent}
                                       freeSolo
                                       variant='outlined'
                                       width='70%'
-                                      InputLabelProps={{ style: { color: 'white' } }}
-                                      inputProps={{ style: { color: 'white'} }}
-                                      sx={{mt:2, mb:2, mr:2, ml:2, width:'90%', backgroundColor:'#575555', borderColor:'white'}}
+                                      sx={{mt:2, mb:2, mr:2, ml:2, width:'90%', backgroundColor:'#575555', borderColor:'white', color:'white'}}
                         />
                     </DialogContent>
                     <DialogActions sx={{ backgroundColor: '#404040'}}>
