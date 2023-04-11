@@ -11,7 +11,8 @@ class RoomHeaderComponent extends Component
 {
     render()
     {
-        const {selectedRoom, openAddChatRoomAdminDialogFlag, openAddChatRoomMemberDialogFlag, toggleAddChatRoomAdminDialogFlag, toggleAddChatRoomMemberDialogFlag} = this.props;
+        const {selectedRoom, openAddChatRoomAdminDialogFlag, openAddChatRoomMemberDialogFlag, toggleAddChatRoomAdminDialogFlag,
+            toggleAddChatRoomMemberDialogFlag, members, administrators, roomName} = this.props;
 
         const handleAddAdminClick = () =>
         {
@@ -28,7 +29,7 @@ class RoomHeaderComponent extends Component
                 {openAddChatRoomAdminDialogFlag ? <AddChatRoomAdminDialogComponent room={selectedRoom}/> : null}
                 {openAddChatRoomMemberDialogFlag ? <AddChatRoomMemberDialogComponent room={selectedRoom}/> : null}
                 <Stack width={'100%'} sx={{ border:1, borderColor:'white', backgroundColor:'#363535'}}>
-                    <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{selectedRoom.roomName}</Typography></Box>
+                    <Box ><Typography variant='h5' fontFamily='Cursive' sx={{color:'lightgrey'}}>{roomName}</Typography></Box>
                     <Stack direction='row'>
                         <Tooltip title={<Typography fontSize={20}>Add a new member to the chat room.</Typography>}>
                             <IconButton size='small' onClick={handleAddMemberClick} sx={{ color: 'white'}}>
@@ -40,8 +41,8 @@ class RoomHeaderComponent extends Component
                                 <AddModeratorIcon/>
                             </IconButton>
                         </Tooltip>
-                        <Typography sx={{color:'lightgreen'}}  variant="subtitle2">Members: [{selectedRoom.members.length}]</Typography>
-                        <Typography sx={{color:'red'}}  variant="subtitle2">Admins: [{selectedRoom.administrators.length}]</Typography>
+                        <Typography sx={{color:'lightgreen'}}  variant="subtitle2">Members: [{members.length}]</Typography>
+                        <Typography sx={{color:'red'}}  variant="subtitle2">Admins: [{administrators.length}]</Typography>
                     </Stack>
                 </Stack>
             </div>
@@ -56,7 +57,10 @@ const mapStateToProps = (state, ownProps) =>
     return {
         openAddChatRoomAdminDialogFlag: state.room.openAddChatRoomAdminDialogFlag,
         openAddChatRoomMemberDialogFlag: state.room.openAddChatRoomMemberDialogFlag,
-        selectedRoom: state.roomList.selectedRoom
+        selectedRoom: state.roomList.selectedRoom,
+        administrators: state.roomList.administrators,
+        members: state.roomList.members,
+        roomName: state.roomList.roomName
     }
 }
 

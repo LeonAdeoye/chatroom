@@ -8,12 +8,16 @@ class ConversationComponent extends Component
 {
     render()
     {
-        const {selectedRoom} = this.props;
+        const {conversation, selectedRoom} = this.props;
         return (
-            selectedRoom && selectedRoom.conversation ? (<Box>
-                <RoomHeaderComponent roomName={selectedRoom.name} memberCount={selectedRoom.memberCount}/>
-                {selectedRoom.conversation.map((chatMessage) => <ChatMessageComponent key={chatMessage.id} chatMessage={chatMessage}/>)}
-            </Box>) : null
+            conversation && selectedRoom
+            ?
+            <Box>
+                <RoomHeaderComponent/>
+                {conversation.map((chatMessage) => <ChatMessageComponent key={chatMessage.id} chatMessage={chatMessage}/>)}
+            </Box>
+            :
+            null
         );
     }
 }
@@ -21,6 +25,7 @@ class ConversationComponent extends Component
 const mapStateToProps = (state, ownProps) =>
 {
     return {
+        conversation: state.roomList.conversation,
         selectedRoom: state.roomList.selectedRoom
     }
 }

@@ -22,6 +22,7 @@ class ChatEntryComponent extends Component
         const submitNewChatMessage = () =>
         {
             createChatMessage(selectedRoom.id, this.state.newChatMessage, loggedInUserId);
+            this.setState({newChatMessage: ''});
         }
 
         const handleOnChangeNewChatMessage = (event) =>

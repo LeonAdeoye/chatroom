@@ -134,11 +134,11 @@ const addMemberToRoomRequest = () =>
     }
 }
 
-const addMemberToRoomRequestSuccess = (updatedRoom) =>
+const addMemberToRoomRequestSuccess = (newMember) =>
 {
     return {
         type: ADD_MEMBER_TO_ROOM_REQUEST_SUCCESS,
-        payload: updatedRoom // TODO: update rooms with this one
+        payload: newMember
     }
 }
 

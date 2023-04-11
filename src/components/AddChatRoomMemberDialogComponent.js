@@ -54,8 +54,8 @@ class AddChatRoomMemberDialogComponent extends Component
                         <Autocomplete size='small'
                                       renderInput={(params) => <TextField {...params}
                                                                           label='Select member to add to room'
-                                                                          InputLabelProps={{ style: { color: 'white' } }}
-                                                                          InputProps={{ style: { color: 'white'} }}/>}
+                                                                          InputLabelProps={{ style: { color: 'white' }}}
+                                                                          />}
                                       options={users.map(user => user.fullName)}
                                       value={this.state.newRoomMemberFullName}
                                       onChange={handleOnChangeEvent}

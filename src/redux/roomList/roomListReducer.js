@@ -37,6 +37,10 @@ import {
 const initialState =
 {
     rooms: [],
+    conversation: [],
+    administrators: [],
+    members: [],
+    roomName: '',
     loading: false,
     errorMessage: '',
     selectedRoom: null,
@@ -51,22 +55,22 @@ const roomListReducer = (state = initialState, action) =>
             return {
                 ...state,
                 errorMessage: '',
-                loading: true
+                loading: true,
+                conversation: []
             }
         case CREATE_CHAT_MESSAGE_REQUEST_SUCCESS:
-            const converseRoom = state.selectedRoom;
-            converseRoom.members = action.payload;
             return {
                 ...state,
                 errorMessage: '',
                 loading: false,
-                selectedRoom: converseRoom
+                conversation: action.payload
             }
         case CREATE_CHAT_MESSAGE_REQUEST_FAILURE:
             return {
                 ...state,
                 errorMessage: action.payload,
-                loading: false
+                loading: false,
+                conversation: []
             }
         case CREATE_ROOM_REQUEST:
             return {
@@ -116,21 +120,33 @@ const roomListReducer = (state = initialState, action) =>
                 ...state,
                 selectedRoom: action.payload,
                 errorMessage: '',
-                loading: false
+                loading: false,
+                members: action.payload.members,
+                administrators: action.payload.administrators,
+                roomName: action.payload.roomName,
+                conversation: action.payload.conversation
             }
         case SELECT_ROOM_REQUEST_FAILURE:
             return {
                 ...state,
                 selectedRoom: null,
                 errorMessage: action.payload,
-                loading: false
+                loading: false,
+                conversation: [],
+                administrators: [],
+                members: [],
+                roomName: ''
             }
         case SELECT_ROOM_REQUEST:
             return {
                 ...state,
                 selectedRoom: null,
                 errorMessage: '',
-                loading: true
+                loading: true,
+                conversation: [],
+                administrators: [],
+                members: [],
+                roomName: ''
             }
         case ADD_ROOM_TO_FAVOURITES:
             // TODO: find room in array and add to favourites it.
@@ -162,64 +178,64 @@ const roomListReducer = (state = initialState, action) =>
             return {
                 ...state,
                 loading: true,
-                errorMessage: ''
+                errorMessage: '',
+                members: []
             }
         case ADD_MEMBER_TO_ROOM_REQUEST_SUCCESS:
-            const memberRoom = state.selectedRoom;
-            memberRoom.members = action.payload;
             return {
                 ...state,
                 loading: false,
                 errorMessage: '',
-                selectedRoom: memberRoom
+                members: action.payload
             }
         case ADD_MEMBER_TO_ROOM_REQUEST_FAILURE:
             return {
                 ...state,
                 loading: false,
-                errorMessage: action.payload
+                errorMessage: action.payload,
+                members: []
             }
         case ADD_ADMIN_TO_ROOM_REQUEST:
             return {
                 ...state,
                 loading: true,
-                errorMessage: ''
+                errorMessage: '',
+                administrators: []
             }
         case ADD_ADMIN_TO_ROOM_REQUEST_SUCCESS:
-            const adminRoom = state.selectedRoom;
-            adminRoom.administrators = action.payload;
             return {
                 ...state,
                 loading: false,
                 errorMessage: '',
-                selectedRoom: adminRoom
+                administrators: action.payload
             }
         case ADD_ADMIN_TO_ROOM_REQUEST_FAILURE:
             return {
                 ...state,
                 loading: false,
-                errorMessage: action.payload
+                errorMessage: action.payload,
+                administrators: []
             }
         case FETCH_ROOM_CONVERSATION_REQUEST:
             return {
                 ...state,
                 loading: true,
-                errorMessage: ''
+                errorMessage: '',
+                conversation: []
             }
         case FETCH_ROOM_CONVERSATION_REQUEST_SUCCESS:
-            const conversationRoom = state.selectedRoom;
-            conversationRoom.conversation = action.payload;
             return {
                 ...state,
                 loading: false,
                 errorMessage: '',
-                selectedRoom: conversationRoom
+                conversation: action.payload
             }
         case FETCH_ROOM_CONVERSATION_REQUEST_FAILURE:
             return {
                 ...state,
                 loading: false,
-                errorMessage: action.payload
+                errorMessage: action.payload,
+                conversation: []
             }
         default: return state;
     }
