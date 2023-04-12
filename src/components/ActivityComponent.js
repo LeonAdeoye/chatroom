@@ -6,7 +6,7 @@ class ActivityComponent extends Component
     {
         return (
             <div>
-
+                <box sx={{backgroundColor:'green', height: '20px'}}>Activity was here</box>
             </div>
         );
     }

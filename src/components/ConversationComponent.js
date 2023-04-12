@@ -3,20 +3,23 @@ import ChatMessageComponent from "./ChatMessageComponent";
 import {connect} from "react-redux"
 import RoomHeaderComponent from "./RoomHeaderComponent";
 import {Box} from "@mui/material";
+import ActivityComponent from "./ActivityComponent";
 
+//                 {conversation.map((chatMessage) => <ChatMessageComponent key={chatMessage.id} chatMessage={chatMessage}/>)}
 class ConversationComponent extends Component
 {
     render()
     {
         const {conversation, selectedRoom, activities} = this.props;
-        const content = renderConversation(conversation, activities);
+        const result = conversation.concat(activities).sort((a, b) => new Date(a["timeStamp"]).getTime() > new Date(b["timeStamp"]).getTime());
+        console.log(result);
 
         return (
             conversation && selectedRoom
             ?
             <Box>
                 <RoomHeaderComponent/>
-                {conversation.map((chatMessage) => <ChatMessageComponent key={chatMessage.id} chatMessage={chatMessage}/>)}
+                { result.map(content => content['activity'] ? <ActivityComponent/> : <ChatMessageComponent key={content['id']} chatMessage={content}/>) }
             </Box>
             :
             null
@@ -24,33 +27,7 @@ class ConversationComponent extends Component
     }
 }
 
-const renderConversation = (conversation, activities) =>
-{
-    let result = [];
-    for(let chatMessageIndex = 0; chatMessageIndex < conversation.length; chatMessageIndex++)
-    {
-        for(let activitiesIndex = 0; activitiesIndex < activities.length; activitiesIndex++)
-        {
-            let activityTimestamp = new Date(activities[activitiesIndex].timeStamp).getTime();
-            let chatMessageTimestamp = new Date(conversation[chatMessageIndex].timeStamp).getTime();
-
-            if(activityTimestamp < chatMessageTimestamp)
-            {
-                result.push("<ActivityComponent/>");
-                let chatMessage = conversation[chatMessageIndex].id;
-                result.push("<ChatMessageComponent key={chatMessage.id} chatMessage={chatMessage}/>");
-            }
-            else
-            {
-                let chatMessage = conversation[chatMessageIndex].id;
-                result.push("<ChatMessageComponent key={chatMessage.id} chatMessage={chatMessage}/>");
-                result.push("<ActivityComponent/>");
-            }
-        }
-    }
-}
-
-const mapStateToProps = (state, ownProps) =>
+const mapStateToProps = (state) =>
 {
     return {
         conversation: state.roomList.conversation,
