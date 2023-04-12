@@ -2,12 +2,26 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {fetchRooms, toggleCreateRoomDialogFlag} from "../redux/roomList/roomListActions";
 import RoomComponent from "./RoomComponent";
-import {IconButton, Stack, TextField, Tooltip, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, IconButton, Stack, TextField, Tooltip, Typography} from "@mui/material";
 import NewRoomDialogComponent from "./NewRoomDialogComponent";
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import FavouritesFolderComponent from "./FavouritesFolderComponent";
+import RecentFolderComponent from "./RecentFolderComponent";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+
+
 
 class RoomListComponent extends Component
 {
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            isFavouritesExpanded: false,
+            isRecentExpanded: false
+        }
+    }
+
     render()
     {
         const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag, rooms} = this.props;
@@ -15,6 +29,18 @@ class RoomListComponent extends Component
         const handleClick = () =>
         {
             toggleCreateRoomDialogFlag();
+        }
+
+        const handleAccordionFavouritesClick = (event) =>
+        {
+            let value = !this.state.isFavouritesExpanded;
+            this.setState({isFavouritesExpanded: value});
+        }
+
+        const handleAccordionRecentClick = (event) =>
+        {
+            let value = !this.state.isRecentExpanded;
+            this.setState({isRecentExpanded: value});
         }
 
         return (
@@ -33,7 +59,24 @@ class RoomListComponent extends Component
                         </IconButton>
                     </Tooltip>
                 </Stack>
-                 {rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}
+                <Stack>
+                    <Accordion disableGutters sx={{ backgroundColor:'#404040'}} expanded={ this.state.isFavouritesExpanded} TransitionProps={{ unmountOnExit: true }} >
+                        <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}
+                                          onClick={handleAccordionFavouritesClick}
+                                          id='panel-1-header'
+                                          aria-controls='panel1-content'
+                                          expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><FavouritesFolderComponent/></AccordionSummary>
+                        <AccordionDetails><Typography>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</Typography></AccordionDetails>
+                    </Accordion>
+                    <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={ this.state.isRecentExpanded} TransitionProps={{ unmountOnExit: true }}>
+                        <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}
+                                          id='panel-2-header'
+                                          aria-controls='panel2-content'
+                                          onClick={handleAccordionRecentClick}
+                                          expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><RecentFolderComponent/></AccordionSummary>
+                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
+                    </Accordion>
+                </Stack>
             </div>
         );
     }

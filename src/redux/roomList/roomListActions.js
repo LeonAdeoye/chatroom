@@ -157,11 +157,11 @@ const addAdminToRoomRequest = () =>
     }
 }
 
-const addAdminToRoomRequestSuccess = (updatedRoom) =>
+const addAdminToRoomRequestSuccess = (administrators) =>
 {
     return {
         type: ADD_ADMIN_TO_ROOM_REQUEST_SUCCESS,
-        payload: updatedRoom // TODO: update rooms with this one
+        payload: administrators
     }
 }
 

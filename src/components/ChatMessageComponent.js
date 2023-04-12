@@ -9,9 +9,8 @@ class ChatMessageComponent extends Component
     {
         const {selectChatMessage, chatMessage, myChatMessageIndex, selectedChatMessageIndex, timeStamp, authorId, users} = this.props;
         const handleSelectChatMessage = () => selectChatMessage();
-        //  <Box mr={2}><Typography sx={{fontWeight: 'bold'}}>{users.find(user => user.id === authorId)}:</Typography></Box> //TODO
         return (
-            <div>
+            users.length > 0 && <div>
                 <Stack sx={{
                     color:'white',
                     '&:hover': {
@@ -20,7 +19,8 @@ class ChatMessageComponent extends Component
                        direction='row'
                        onClick={handleSelectChatMessage}
                        bgcolor={selectedChatMessageIndex === myChatMessageIndex ? '#2c2929' : '#404040'}>
-                    <Box ml={2} mr={2}><Typography fontSize='4' fontFamily='Arial' color='lightgrey'>{timeStamp}</Typography></Box>
+                    <Box mr={1}><Typography sx={{fontWeight: 'bold'}}>{users.find(user => user.id === authorId).fullName}:</Typography></Box>
+                    <Box ml={1} mr={1}><Typography fontSize='4' fontFamily='Arial' color='lightblue'>{new Date(timeStamp).toLocaleTimeString()}</Typography></Box>
                     <Box><Typography fontFamily='cursive' color='lightgrey'>{chatMessage}</Typography></Box>
                 </Stack>
             </div>

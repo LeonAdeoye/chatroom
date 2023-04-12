@@ -23,21 +23,16 @@ class RoomComponent extends Component
         return (
             <>
                 <Box sx={{
-                    p:0.25,
                     borderRadius: '7px',
                     color:'white',
                     height: '20px',
                     padding: '10px',
                     textOverflow: 'ellipsis',
                     textAlign: 'center',
-                    ml:0.5,
-                    mr:0.5,
                     '&:hover': {
                         backgroundColor: '#4f4e4e',
                         borderColor:'white',
-                        border:1,
-                        ml:0.5,
-                        mr:0.5
+                        border:1
                     }}}
                     bgcolor={selectedRoomIndex === myRoomIndex ? '#2c2929' : '#404040'}
                     onClick={handleFetchConversation}>

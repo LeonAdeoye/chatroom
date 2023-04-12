@@ -40,6 +40,7 @@ const initialState =
     conversation: [],
     administrators: [],
     members: [],
+    activities: [],
     roomName: '',
     loading: false,
     errorMessage: '',
@@ -124,7 +125,8 @@ const roomListReducer = (state = initialState, action) =>
                 members: action.payload.members,
                 administrators: action.payload.administrators,
                 roomName: action.payload.roomName,
-                conversation: action.payload.conversation
+                conversation: action.payload.conversation,
+                activities: action.payload.activities
             }
         case SELECT_ROOM_REQUEST_FAILURE:
             return {
@@ -134,6 +136,7 @@ const roomListReducer = (state = initialState, action) =>
                 loading: false,
                 conversation: [],
                 administrators: [],
+                activities: [],
                 members: [],
                 roomName: ''
             }
@@ -146,6 +149,7 @@ const roomListReducer = (state = initialState, action) =>
                 conversation: [],
                 administrators: [],
                 members: [],
+                activities: [],
                 roomName: ''
             }
         case ADD_ROOM_TO_FAVOURITES:

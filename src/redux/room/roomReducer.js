@@ -5,7 +5,7 @@ import {
 
 const initialState =
 {
-    selectedRoomIndex: -1, // TODO do we need this?
+    selectedRoomIndex: -1,
     openAddChatRoomMemberDialogFlag: false,
     openAddChatRoomAdminDialogFlag: false
 }
