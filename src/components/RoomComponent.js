@@ -34,7 +34,7 @@ class RoomComponent extends Component
                         borderColor:'white',
                         border:1
                     }}}
-                    bgcolor={selectedRoomIndex === myRoomIndex ? '#2c2929' : '#404040'}
+                    bgcolor={selectedRoomIndex === myRoomIndex ? '#363535' : '#404040'}
                     onClick={handleFetchConversation}>
                     <Grid container rowSpacing={0} columnSpacing={0}>
                         <Grid item  xl>

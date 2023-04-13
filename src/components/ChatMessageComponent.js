@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {Stack, Box, Typography} from "@mui/material";
+import {Stack, Typography, Grid} from "@mui/material";
 import {selectChatMessage} from "../redux/chatMessage/chatMessageActions";
+import InputBase from "@mui/material/InputBase";
 
 class ChatMessageComponent extends Component
 {
@@ -11,17 +12,21 @@ class ChatMessageComponent extends Component
         const handleSelectChatMessage = () => selectChatMessage();
         return (
             users.length > 0 && <div>
-                <Stack sx={{
-                    color:'white',
-                    '&:hover': {
-                        backgroundColor: '#4f4e4e'
-                    }}}
+                <Stack sx={{color:'white', '&:hover': { backgroundColor: '#4f4e4e' }}}
                        direction='row'
                        onClick={handleSelectChatMessage}
                        bgcolor={selectedChatMessageIndex === myChatMessageIndex ? '#2c2929' : '#404040'}>
-                    <Box mr={1}><Typography sx={{fontWeight: 'bold'}}>{users.find(user => user.id === authorId).fullName}:</Typography></Box>
-                    <Box ml={1} mr={1}><Typography fontSize='4' fontFamily='Arial' color='lightblue'>{new Date(timeStamp).toLocaleTimeString()}</Typography></Box>
-                    <Box><Typography fontFamily='cursive' color='lightgrey'>{chatMessage}</Typography></Box>
+                    <Grid container sx={{'&:hover': { backgroundColor: '#4f4e4e' }}}>
+                        <Grid item xs={0.75}>
+                            <Typography fontSize='4' fontFamily='Arial' color='lightblue'>{new Date(timeStamp).toLocaleTimeString()}</Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography sx={{fontWeight: 'bold'}}>{users.find(user => user.id === authorId).fullName}:</Typography>
+                        </Grid>
+                        <Grid item xs={10.25}>
+                            <InputBase sx={{ padding: 0, backgroundColor: '#404040', width:'98%', color:'lightgray', fontFamily: 'cursive', '&:hover': { backgroundColor: '#4f4e4e' }}} multiline value={chatMessage} readonly/>
+                        </Grid>
+                    </Grid>
                 </Stack>
             </div>
         );

@@ -53,19 +53,18 @@ class RoomListComponent extends Component
         const filterRooms = (func) =>
         {
             const filterText = this.state.filterText.toUpperCase();
-            const filteredRooms = [];
 
             if (favouriteRooms.length > 0 && rooms.length > 0)
-                filteredRooms.push(...rooms.filter(room => func(favouriteRooms, room.id)));
+                return rooms.filter(room => func(favouriteRooms, room.id)).filter(room => filterText === '' || room.name.toUpperCase().includes(filterText));
 
             if (users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
             {
                 const user = users.find(user => user.id === loggedInUserId);
                 if (user && user.favouriteRooms.length > 0)
-                    filteredRooms.push(...rooms.filter(room => func(user.favouriteRooms, room.id)));
+                    return rooms.filter(room => func(user.favouriteRooms, room.id)).filter(room => filterText === '' || room.name.toUpperCase().includes(filterText));
             }
 
-            return filteredRooms.filter(room => filterText === '' || room.name.toUpperCase().includes(filterText));
+            return [];
         };
 
         const myFavouriteRooms = filterRooms((room, id) => { return room.includes(id); });
