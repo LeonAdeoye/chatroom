@@ -33,8 +33,7 @@ const userReducer = (state = initialState, action) =>
                 ...state,
                 users: [],
                 loading: true,
-                errorMessage: '',
-                selectedRoomIndex: action.payload
+                errorMessage: ''
             }
         case FETCH_USERS_SUCCESS:
             return {
@@ -51,10 +50,9 @@ const userReducer = (state = initialState, action) =>
                 errorMessage: action.payload
             }
         case ADD_USER_REQUEST_SUCCESS:
-            const newUsers = state.users.push(action.payload);
             return {
                 ...state,
-                users: newUsers,
+                users: action.payload,
                 loading: false,
                 errorMessage: ''
             }

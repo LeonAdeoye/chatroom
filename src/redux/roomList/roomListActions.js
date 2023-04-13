@@ -1,5 +1,11 @@
 import {
-    CLOSE_ROOM,
+    CLOSE_ROOM_REQUEST,
+    CLOSE_ROOM_REQUEST_SUCCESS,
+    CLOSE_ROOM_REQUEST_FAILURE,
+
+    ADD_ROOM_TO_FAVOURITES_REQUEST,
+    ADD_ROOM_TO_FAVOURITES_REQUEST_SUCCESS,
+    ADD_ROOM_TO_FAVOURITES_REQUEST_FAILURE,
 
     CREATE_ROOM_REQUEST,
     CREATE_ROOM_REQUEST_SUCCESS,
@@ -9,7 +15,6 @@ import {
     FETCH_ROOMS_REQUEST_SUCCESS,
     FETCH_ROOMS_REQUEST_FAILURE,
 
-    ADD_ROOM_TO_FAVOURITES,
     TOGGLE_CREATE_ROOM_DIALOG,
 
     SELECT_ROOM_REQUEST,
@@ -42,11 +47,26 @@ const toggleCreateRoomDialogFlagRequest = () =>
     }
 }
 
-const closeRoomRequest = (roomId) =>
+const closeRoomRequest = () =>
 {
     return {
-        type: CLOSE_ROOM,
-        payload: roomId
+        type: CLOSE_ROOM_REQUEST
+    }
+}
+
+const closeRoomRequestSuccess = (closedRooms) =>
+{
+    return {
+        type: CLOSE_ROOM_REQUEST_SUCCESS,
+        payload: closedRooms
+    }
+}
+
+const closeRoomRequestFailure = (error) =>
+{
+    return {
+        type: CLOSE_ROOM_REQUEST_FAILURE,
+        payload: error
     }
 }
 
@@ -73,11 +93,26 @@ const selectRoomRequestFailure = (error) =>
     }
 }
 
-const addRoomToFavouritesRequest = (roomId) =>
+const addRoomToFavouritesRequest = () =>
 {
     return {
-        type: ADD_ROOM_TO_FAVOURITES,
-        payload: roomId
+        type: ADD_ROOM_TO_FAVOURITES_REQUEST
+    }
+}
+
+const addRoomToFavouritesRequestSuccess = (favourites) =>
+{
+    return {
+        type: ADD_ROOM_TO_FAVOURITES_REQUEST_SUCCESS,
+        payload: favourites
+    }
+}
+
+const addRoomToFavouritesRequestFailure = (error) =>
+{
+    return {
+        type: ADD_ROOM_TO_FAVOURITES_REQUEST_FAILURE,
+        payload: error
     }
 }
 
@@ -196,20 +231,37 @@ const fetchConversationRequestFailure = (error) =>
     }
 }
 
-
-export const closeRoom = (roomId) =>
+export const addRoomToFavourites = (loggedInUser, roomId) =>
 {
     return function(dispatch)
     {
-        dispatch(closeRoomRequest(roomId))
+        dispatch(addRoomToFavouritesRequest(loggedInUser, roomId))
+        axios.put('http://localhost:8080/addToFavourites?userId=' + loggedInUser + '&roomId=' + roomId)
+            .then(response =>
+            {
+                dispatch( addRoomToFavouritesRequestSuccess(response.data));
+            })
+            .catch(err =>
+            {
+                dispatch(addRoomToFavouritesRequestFailure(err.message));
+            });
     }
 }
 
-export const addRoomToFavourites = (roomId) =>
+export const closeRoom = (loggedInUser, roomId) =>
 {
     return function(dispatch)
     {
-        dispatch(addRoomToFavouritesRequest(roomId))
+        dispatch(closeRoomRequest(loggedInUser, roomId))
+        axios.put('http://localhost:8080/closeRoom?userId=' + loggedInUser + '&roomId=' + roomId)
+            .then(response =>
+            {
+                dispatch(closeRoomRequestSuccess(response.data));
+            })
+            .catch(err =>
+            {
+                dispatch(closeRoomRequestFailure(err.message));
+            });
     }
 }
 

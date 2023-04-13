@@ -9,7 +9,7 @@ class RoomComponent extends Component
 {
     render()
     {
-        const {selectedRoomIndex, myRoomIndex, fetchConversation, roomName, selectRoom, closeRoom, addToFavourites} = this.props;
+        const {loggedInUserId, selectedRoomIndex, myRoomIndex, fetchConversation, roomName, selectRoom, closeRoom, addToFavourites} = this.props;
 
         const handleFetchConversation = () =>
         {
@@ -17,8 +17,8 @@ class RoomComponent extends Component
             fetchConversation();
         }
 
-        const handleCloseRoom = () => closeRoom();
-        const handleAddToFavourites = () => addToFavourites();
+        const handleCloseRoom = () => closeRoom(loggedInUserId, selectedRoomIndex);
+        const handleAddToFavourites = () => addToFavourites(loggedInUserId, selectedRoomIndex);
 
         return (
             <>
@@ -69,7 +69,8 @@ const mapStateToProps = (state, ownProps) =>
     return {
         roomName: ownProps.roomName,
         myRoomIndex: ownProps.index,
-        selectedRoomIndex: state.room.selectedRoomIndex
+        selectedRoomIndex: state.roomList.selectedRoomIndex,
+        loggedInUserId: state.user.loggedInUserId
     }
 }
 
@@ -77,12 +78,10 @@ const mapDispatchToProps = (dispatch, ownProps) =>
 {
     return {
         fetchConversation: () => dispatch(fetchConversation(ownProps.index)),
-        closeRoom: () => dispatch(closeRoom(ownProps.index)),
+        closeRoom: (userId, roomId) => dispatch(closeRoom(userId, roomId)),
         selectRoom: () => dispatch(selectRoom(ownProps.index)),
-        addToFavourites: () => dispatch(addRoomToFavourites(ownProps.index))
+        addToFavourites: (userId, roomId) => dispatch(addRoomToFavourites(userId, roomId))
     }
 }
 
-// Note that you need to pass null if you do not need to subscribe to state changes in the store and only want to dispatch actions. For example.
-//export default connect(null, mapDispatchToProps) (RoomComponent);
 export default connect(mapStateToProps, mapDispatchToProps) (RoomComponent);

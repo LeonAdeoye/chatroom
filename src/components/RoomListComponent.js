@@ -66,7 +66,7 @@ class RoomListComponent extends Component
                                           id='panel-1-header'
                                           aria-controls='panel1-content'
                                           expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><FavouritesFolderComponent/></AccordionSummary>
-                        <AccordionDetails>{rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
+                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
                     </Accordion>
                     <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={ this.state.isRecentExpanded} TransitionProps={{ unmountOnExit: true }}>
                         <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}

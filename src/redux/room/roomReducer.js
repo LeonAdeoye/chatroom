@@ -5,7 +5,6 @@ import {
 
 const initialState =
 {
-    selectedRoomIndex: -1,
     openAddChatRoomMemberDialogFlag: false,
     openAddChatRoomAdminDialogFlag: false
 }

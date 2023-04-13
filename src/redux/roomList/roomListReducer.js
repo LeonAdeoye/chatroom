@@ -1,13 +1,18 @@
 import {
     DELETE_ROOM,
-    CLOSE_ROOM,
+    CLOSE_ROOM_REQUEST,
+    CLOSE_ROOM_REQUEST_SUCCESS,
+    CLOSE_ROOM_REQUEST_FAILURE,
 
     FETCH_ROOMS_REQUEST_FAILURE,
     FETCH_ROOMS_REQUEST_SUCCESS,
     FETCH_ROOMS_REQUEST,
 
     TOGGLE_CREATE_ROOM_DIALOG,
-    ADD_ROOM_TO_FAVOURITES,
+
+    ADD_ROOM_TO_FAVOURITES_REQUEST,
+    ADD_ROOM_TO_FAVOURITES_REQUEST_SUCCESS,
+    ADD_ROOM_TO_FAVOURITES_REQUEST_FAILURE,
 
     CREATE_ROOM_REQUEST,
     CREATE_ROOM_REQUEST_FAILURE,
@@ -45,7 +50,8 @@ const initialState =
     loading: false,
     errorMessage: '',
     selectedRoom: null,
-    openCreateRoomDialogFlag: false
+    openCreateRoomDialogFlag: false,
+    selectedRoomIndex: -1,
 }
 
 const roomListReducer = (state = initialState, action) =>
@@ -107,14 +113,23 @@ const roomListReducer = (state = initialState, action) =>
                 rooms: deleteRoomArray
 
             }
-        case CLOSE_ROOM:
-            // TODO: find room in array and close it.
-            const updatedRooms = state.rooms.filter(object => {
-                return object.id !== action.payload;
-            })
+        case CLOSE_ROOM_REQUEST:
             return {
                 ...state,
-                rooms: updatedRooms
+                errorMessage: '',
+                loading: true
+            }
+        case CLOSE_ROOM_REQUEST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                errorMessage: ''
+            }
+        case CLOSE_ROOM_REQUEST_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                errorMessage: action.payload
             }
         case SELECT_ROOM_REQUEST_SUCCESS:
             return {
@@ -126,7 +141,8 @@ const roomListReducer = (state = initialState, action) =>
                 administrators: action.payload.administrators,
                 roomName: action.payload.roomName,
                 conversation: action.payload.conversation,
-                activities: action.payload.activities
+                activities: action.payload.activities,
+                selectedRoomIndex: action.payload.id
             }
         case SELECT_ROOM_REQUEST_FAILURE:
             return {
@@ -138,7 +154,8 @@ const roomListReducer = (state = initialState, action) =>
                 administrators: [],
                 activities: [],
                 members: [],
-                roomName: ''
+                roomName: '',
+                selectedRoomIndex: -1
             }
         case SELECT_ROOM_REQUEST:
             return {
@@ -150,12 +167,26 @@ const roomListReducer = (state = initialState, action) =>
                 administrators: [],
                 members: [],
                 activities: [],
-                roomName: ''
+                roomName: '',
+                selectedRoomIndex: -1
             }
-        case ADD_ROOM_TO_FAVOURITES:
-            // TODO: find room in array and add to favourites it.
+        case ADD_ROOM_TO_FAVOURITES_REQUEST:
             return {
-                ...state
+                ...state,
+                loading: true,
+                errorMessage: ''
+            }
+        case ADD_ROOM_TO_FAVOURITES_REQUEST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                errorMessage: ''
+            }
+        case ADD_ROOM_TO_FAVOURITES_REQUEST_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                errorMessage: action.payload
             }
         case FETCH_ROOMS_REQUEST:
             return {
