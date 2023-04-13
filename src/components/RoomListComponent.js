@@ -50,65 +50,26 @@ class RoomListComponent extends Component
             this.setState({isRecentExpanded: value});
         }
 
-        const getNonFavouriteRooms = (loggedInUserId, users, closedRooms) =>
+        const filterRooms = (func) =>
         {
-            let result = [];
-            if(users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
+            const filterText = this.state.filterText.toUpperCase();
+            const filteredRooms = [];
+
+            if (favouriteRooms.length > 0 && rooms.length > 0)
+                filteredRooms.push(...rooms.filter(room => func(favouriteRooms, room.id)));
+
+            if (users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
             {
-                let user = users.find(user => user.id === loggedInUserId);
-                if(user && user.favouriteRooms.length > 0)
-                {
-                    result = rooms.filter(room => !user.favouriteRooms.includes(room.id));
-                    if(this.state.filterText !== '')
-                    {
-                        return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
-                    }
-                }
+                const user = users.find(user => user.id === loggedInUserId);
+                if (user && user.favouriteRooms.length > 0)
+                    filteredRooms.push(...rooms.filter(room => func(user.favouriteRooms, room.id)));
             }
 
-            if(favouriteRooms.length > 0 && rooms.length > 0)
-            {
-                result = rooms.filter(room => !favouriteRooms.includes(room.id));
+            return filteredRooms.filter(room => filterText === '' || room.name.toUpperCase().includes(filterText));
+        };
 
-                if(this.state.filterText !== '')
-                {
-                    return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
-                }
-            }
-
-            return result;
-        }
-
-        const getFavouriteRooms = (loggedInUserId, users, favouriteRooms, rooms) =>
-        {
-            let result = [];
-            if(users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
-            {
-                let user = users.find(user => user.id === loggedInUserId);
-                if(user && user.favouriteRooms.length > 0)
-                {
-                    result = rooms.filter(room => user.favouriteRooms.includes(room.id));
-                    if(this.state.filterText !== '')
-                    {
-                        return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
-                    }
-                }
-            }
-
-            if(favouriteRooms.length > 0 && rooms.length > 0)
-            {
-                result = rooms.filter(room => favouriteRooms.includes(room.id));
-                if(this.state.filterText !== '')
-                {
-                    return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
-                }
-            }
-
-            return result;
-        }
-
-        const myFavouriteRooms = getFavouriteRooms(loggedInUserId, users, favouriteRooms, rooms);
-        const myRecentRooms = getNonFavouriteRooms(loggedInUserId, users, favouriteRooms, rooms);
+        const myFavouriteRooms = filterRooms((room, id) => { return room.includes(id); });
+        const myNonFavouriteRooms = filterRooms((room, id) => { return !room.includes(id); });
 
         return (
             <div>
@@ -136,13 +97,13 @@ class RoomListComponent extends Component
                                           expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><FavouritesFolderComponent/></AccordionSummary>
                         <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{myFavouriteRooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
                     </Accordion> : null}
-                    {myRecentRooms.length > 0 ? <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={ this.state.isRecentExpanded} TransitionProps={{ unmountOnExit: true }}>
+                    {myNonFavouriteRooms.length > 0 ? <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={ this.state.isRecentExpanded} TransitionProps={{ unmountOnExit: true }}>
                         <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}
                                           id='panel-2-header'
                                           aria-controls='panel2-content'
                                           onClick={handleAccordionRecentClick}
                                           expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><RecentFolderComponent/></AccordionSummary>
-                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{myRecentRooms.filter(room => !room.isValid).map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
+                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{myNonFavouriteRooms.filter(room => !room.isValid).map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
                     </Accordion> : null}
                 </Stack>
             </div>
