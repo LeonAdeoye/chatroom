@@ -42,6 +42,15 @@ class AddChatRoomAdminDialogComponent extends Component
             addAdminToRoom(selectedRoom.id, newRoomAdminId, loggedInUserId);
         }
 
+        const handleKeyPress = (event) =>
+        {
+            if(event.key === 'Enter' && this.state.newRoomAdminFullName !== '')
+            {
+                handleSubmit();
+                event.preventDefault();
+            }
+        }
+
         return (
             <div>
                 <Dialog aria-labelledby='dialog-title'
@@ -50,7 +59,7 @@ class AddChatRoomAdminDialogComponent extends Component
                         sx={{ backgroundColor: '#404040'}}
                         open={openAddChatRoomAdminDialogFlag}>
                     <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >New Admin In {selectedRoom.roomName}</DialogTitle>
-                    <DialogContent sx={{ width: '500px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}}>
+                    <DialogContent sx={{ width: '500px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}} onKeyPress={handleKeyPress}>
                         <Autocomplete size='small'
                                       renderInput={(params) => <TextField {...params}
                                                                           label='Select administrator to add to room'
@@ -69,7 +78,7 @@ class AddChatRoomAdminDialogComponent extends Component
                                 backgroundColor: '#4f4e4e',
                                 borderColor:'white'
                             }}} onClick={handleCancel}>Cancel</Button>
-                        <Button variant='outlined' sx={{ backgroundColor: '#404040', borderColor:'white', color: 'white', '&:hover': {
+                        <Button disabled={this.state.newRoomAdminFullName === ''} variant='outlined' sx={{ backgroundColor: '#404040', borderColor:'white', color: 'white', '&:hover': {
                                 backgroundColor: '#4f4e4e',
                                 borderColor:'white'
                             }}} autoFocus onClick={handleSubmit}>Submit</Button>

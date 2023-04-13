@@ -33,6 +33,15 @@ class NewRoomDialogComponent extends Component
             createNewRoom(this.state.roomName, loggedInUserId);
         }
 
+        const handleKeyPress = (event) =>
+        {
+            if(event.key === 'Enter' && this.state.roomName !== '')
+            {
+                handleSubmit();
+                event.preventDefault();
+            }
+        }
+
         return (
             <div>
                 <Dialog aria-labelledby='dialog-title'
@@ -41,7 +50,7 @@ class NewRoomDialogComponent extends Component
                         sx={{ backgroundColor: '#404040'}}
                         open={openCreateRoomDialogFlag}>
                     <DialogTitle id='dialog-title' sx={{ backgroundColor: 'white', color: '#404040'}} >Add New Chat Room</DialogTitle>
-                    <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}}>
+                    <DialogContent sx={{ width: '400px', height: '80px', backgroundColor: '#404040', color: 'lightgrey'}} onKeyPress={handleKeyPress}>
                         <TextField label='Enter the name of the chat room...'
                                    variant='outlined'
                                    width='70%'
@@ -56,7 +65,7 @@ class NewRoomDialogComponent extends Component
                                 backgroundColor: '#4f4e4e',
                                 borderColor:'white'
                             }}} onClick={handleCancel}>Cancel</Button>
-                        <Button variant='outlined' sx={{ backgroundColor: '#404040', borderColor:'white', color: 'white', '&:hover': {
+                        <Button disabled={this.state.roomName === ""} variant='outlined' sx={{ backgroundColor: '#404040', borderColor:'white', color: 'white', '&:hover': {
                                 backgroundColor: '#4f4e4e',
                                 borderColor:'white'
                             }}} autoFocus onClick={handleSubmit}>Submit</Button>

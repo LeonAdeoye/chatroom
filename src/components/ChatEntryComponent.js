@@ -32,6 +32,15 @@ class ChatEntryComponent extends Component
             });
         }
 
+        const handleKeyPress = (event) =>
+        {
+            if(event.key === 'Enter' && this.state.newChatMessage !== '')
+                submitNewChatMessage();
+
+            event.preventDefault();
+        }
+
+
         return (
             <>
                 <Stack bgcolor='#104040' width='100%' direction='row' height='50px'>
@@ -48,9 +57,11 @@ class ChatEntryComponent extends Component
                             inputProps={{ 'aria-label': 'enter chat' }}
                         />
                         <Tooltip title={<Typography fontSize={20}>Send your chat message.</Typography>}>
-                            <IconButton size='small' onClick={submitNewChatMessage} sx={{color:'white'}}>
-                                <SendIcon/>
-                            </IconButton>
+                            <span onKeyPress={handleKeyPress}>
+                                <IconButton disabled={this.state.newChatMessage === ''} size='small' onClick={submitNewChatMessage} sx={{color:'white'}}>
+                                    <SendIcon/>
+                                </IconButton>
+                            </span>
                         </Tooltip>
                     </Paper>
                 </Stack>
