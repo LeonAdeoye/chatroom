@@ -8,6 +8,7 @@ import AddCommentIcon from '@mui/icons-material/AddComment';
 import FavouritesFolderComponent from "./FavouritesFolderComponent";
 import RecentFolderComponent from "./RecentFolderComponent";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import {fetchUsers} from "../redux/user/userActions";
 
 
 
@@ -18,17 +19,23 @@ class RoomListComponent extends Component
         super(props);
         this.state = {
             isFavouritesExpanded: false,
-            isRecentExpanded: false
+            isRecentExpanded: false,
+            filterText: ''
         }
     }
 
     render()
     {
-        const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag, rooms} = this.props;
+        const {openCreateRoomDialogFlag, toggleCreateRoomDialogFlag, rooms, favouriteRooms, users, loggedInUserId} = this.props;
 
         const handleClick = () =>
         {
             toggleCreateRoomDialogFlag();
+        }
+
+        const handleOnChange = (event) =>
+        {
+            this.setState({filterText: event.target.value});
         }
 
         const handleAccordionFavouritesClick = (event) =>
@@ -43,6 +50,66 @@ class RoomListComponent extends Component
             this.setState({isRecentExpanded: value});
         }
 
+        const getNonFavouriteRooms = (loggedInUserId, users, closedRooms) =>
+        {
+            let result = [];
+            if(users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
+            {
+                let user = users.find(user => user.id === loggedInUserId);
+                if(user && user.favouriteRooms.length > 0)
+                {
+                    result = rooms.filter(room => !user.favouriteRooms.includes(room.id));
+                    if(this.state.filterText !== '')
+                    {
+                        return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
+                    }
+                }
+            }
+
+            if(favouriteRooms.length > 0 && rooms.length > 0)
+            {
+                result = rooms.filter(room => !favouriteRooms.includes(room.id));
+
+                if(this.state.filterText !== '')
+                {
+                    return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
+                }
+            }
+
+            return result;
+        }
+
+        const getFavouriteRooms = (loggedInUserId, users, favouriteRooms, rooms) =>
+        {
+            let result = [];
+            if(users.length > 0 && loggedInUserId !== '' && rooms.length > 0)
+            {
+                let user = users.find(user => user.id === loggedInUserId);
+                if(user && user.favouriteRooms.length > 0)
+                {
+                    result = rooms.filter(room => user.favouriteRooms.includes(room.id));
+                    if(this.state.filterText !== '')
+                    {
+                        return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
+                    }
+                }
+            }
+
+            if(favouriteRooms.length > 0 && rooms.length > 0)
+            {
+                result = rooms.filter(room => favouriteRooms.includes(room.id));
+                if(this.state.filterText !== '')
+                {
+                    return result.filter(room => room.name.toUpperCase().includes(this.state.filterText.toUpperCase()))
+                }
+            }
+
+            return result;
+        }
+
+        const myFavouriteRooms = getFavouriteRooms(loggedInUserId, users, favouriteRooms, rooms);
+        const myRecentRooms = getNonFavouriteRooms(loggedInUserId, users, favouriteRooms, rooms);
+
         return (
             <div>
                 {openCreateRoomDialogFlag ? <NewRoomDialogComponent/> : null}
@@ -50,6 +117,7 @@ class RoomListComponent extends Component
                     <TextField label='Enter text to filter'
                                variant='outlined'
                                size="small"
+                               onChange={handleOnChange}
                                InputLabelProps={{ style: { color: 'white' } }}
                                inputProps={{ style: { color: 'white', borderColor: 'white'} }}
                                sx={{mt:2, mb:2, mr:0, ml:2, width:'85%', backgroundColor:'#575555'}}/>
@@ -60,22 +128,22 @@ class RoomListComponent extends Component
                     </Tooltip>
                 </Stack>
                 <Stack>
-                    <Accordion disableGutters sx={{ backgroundColor:'#404040'}} expanded={ this.state.isFavouritesExpanded} TransitionProps={{ unmountOnExit: true }} >
+                    {myFavouriteRooms.length > 0 ? <Accordion disableGutters sx={{ backgroundColor:'#404040'}} expanded={ this.state.isFavouritesExpanded} TransitionProps={{ unmountOnExit: true }} >
                         <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}
                                           onClick={handleAccordionFavouritesClick}
                                           id='panel-1-header'
                                           aria-controls='panel1-content'
                                           expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><FavouritesFolderComponent/></AccordionSummary>
-                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{rooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
-                    </Accordion>
-                    <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={ this.state.isRecentExpanded} TransitionProps={{ unmountOnExit: true }}>
+                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{myFavouriteRooms.map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
+                    </Accordion> : null}
+                    {myRecentRooms.length > 0 ? <Accordion disableGutters  sx={{ backgroundColor:'#404040', border:'0px'}} expanded={ this.state.isRecentExpanded} TransitionProps={{ unmountOnExit: true }}>
                         <AccordionSummary sx={{ backgroundColor:'#575555', height:'25px', margin:0.5, borderRadius: '5px'}}
                                           id='panel-2-header'
                                           aria-controls='panel2-content'
                                           onClick={handleAccordionRecentClick}
                                           expandIcon={<ExpandMoreIcon sx={{color:'white'}}/>}><RecentFolderComponent/></AccordionSummary>
-                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{rooms.filter(room => !room.isValid).map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
-                    </Accordion>
+                        <AccordionDetails sx={{padding:0.5, margin:0, border: '0px'}}>{myRecentRooms.filter(room => !room.isValid).map((room) => <RoomComponent key={room.id} index={room.id} roomName={room.name}/>)}</AccordionDetails>
+                    </Accordion> : null}
                 </Stack>
             </div>
         );
@@ -83,7 +151,11 @@ class RoomListComponent extends Component
 
     componentDidMount()
     {
-        this.props.fetchRooms();
+        if(this.props.rooms.length === 0)
+            this.props.fetchRooms();
+
+        if(this.props.users.length === 0)
+            this.props.fetchUsers();
     }
 }
 
@@ -93,6 +165,9 @@ const mapStateToProps = (state, ownProps) =>
 {
     return {
         rooms: state.roomList.rooms,
+        users:state.user.users,
+        favouriteRooms: state.roomList.favouriteRooms,
+        loggedInUserId: state.user.loggedInUserId,
         openCreateRoomDialogFlag: state.roomList.openCreateRoomDialogFlag
     }
 }
@@ -101,7 +176,8 @@ const mapDispatchToProps = (dispatch) =>
 {
     return {
         toggleCreateRoomDialogFlag: () => dispatch(toggleCreateRoomDialogFlag()),
-        fetchRooms: () => dispatch(fetchRooms())
+        fetchRooms: () => dispatch(fetchRooms()),
+        fetchUsers: () => dispatch(fetchUsers())
     }
 }
 

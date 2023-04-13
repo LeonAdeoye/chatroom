@@ -17,7 +17,7 @@ class ConversationComponent extends Component
             ?
             <Box>
                 <RoomHeaderComponent/>
-                { result.map(content => content['activity'] ? <ActivityComponent activity={content}/> : <ChatMessageComponent key={content['id']} chatMessage={content}/>) }
+                { result.map(content => content['activity'] ? <ActivityComponent key={content['id']} activity={content}/> : <ChatMessageComponent key={content['id']} chatMessage={content}/>) }
             </Box>
             :
             null

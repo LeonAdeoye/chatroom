@@ -52,6 +52,8 @@ const initialState =
     selectedRoom: null,
     openCreateRoomDialogFlag: false,
     selectedRoomIndex: -1,
+    favouriteRooms: [],
+    closedRooms: []
 }
 
 const roomListReducer = (state = initialState, action) =>
@@ -117,19 +119,22 @@ const roomListReducer = (state = initialState, action) =>
             return {
                 ...state,
                 errorMessage: '',
-                loading: true
+                loading: true,
+                closedRooms: []
             }
         case CLOSE_ROOM_REQUEST_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                errorMessage: ''
+                errorMessage: '',
+                closedRooms: action.payload
             }
         case CLOSE_ROOM_REQUEST_FAILURE:
             return {
                 ...state,
                 loading: false,
-                errorMessage: action.payload
+                errorMessage: action.payload,
+                closedRooms: []
             }
         case SELECT_ROOM_REQUEST_SUCCESS:
             return {
@@ -174,19 +179,22 @@ const roomListReducer = (state = initialState, action) =>
             return {
                 ...state,
                 loading: true,
-                errorMessage: ''
+                errorMessage: '',
+                favouriteRooms: []
             }
         case ADD_ROOM_TO_FAVOURITES_REQUEST_SUCCESS:
             return {
                 ...state,
                 loading: false,
-                errorMessage: ''
+                errorMessage: '',
+                favouriteRooms: action.payload
             }
         case ADD_ROOM_TO_FAVOURITES_REQUEST_FAILURE:
             return {
                 ...state,
                 loading: false,
-                errorMessage: action.payload
+                errorMessage: action.payload,
+                favouriteRooms: []
             }
         case FETCH_ROOMS_REQUEST:
             return {
