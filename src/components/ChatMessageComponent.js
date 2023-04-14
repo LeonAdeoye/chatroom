@@ -12,11 +12,11 @@ class ChatMessageComponent extends Component
         const handleSelectChatMessage = () => selectChatMessage();
         return (
             users.length > 0 && <div>
-                <Stack sx={{color:'white', '&:hover': { backgroundColor: '#4f4e4e' }}}
+                <Stack sx={{color:'white'}}
                        direction='row'
                        onClick={handleSelectChatMessage}
                        bgcolor={selectedChatMessageIndex === myChatMessageIndex ? '#2c2929' : '#404040'}>
-                    <Grid container sx={{'&:hover': { backgroundColor: '#4f4e4e' }}}>
+                    <Grid container>
                         <Grid item xs={0.75}>
                             <Typography fontSize='4' fontFamily='Arial' color='lightblue'>{new Date(timeStamp).toLocaleTimeString()}</Typography>
                         </Grid>
@@ -24,7 +24,8 @@ class ChatMessageComponent extends Component
                             <Typography sx={{fontWeight: 'bold'}}>{users.find(user => user.id === authorId).fullName}:</Typography>
                         </Grid>
                         <Grid item xs={10.25}>
-                            <InputBase sx={{ padding: 0, backgroundColor: '#404040', width:'98%', color:'lightgray', fontFamily: 'cursive', '&:hover': { backgroundColor: '#4f4e4e' }}} multiline value={chatMessage} readonly/>
+                            <InputBase sx={{ padding: 0, backgroundColor: '#404040', color:'lightgray', fontFamily: 'cursive'}}
+                                       multiline={true} value={chatMessage} fullWidth/>
                         </Grid>
                     </Grid>
                 </Stack>

@@ -13,13 +13,13 @@ class ActivityComponent extends Component
             switch(action)
             {
                 case "ADD_ADMIN":
-                    return `+++++++++++++++++${instigatorName} added new administrator ${targetName} to the room+++++++++++++++++`;
+                    return `NEW ACTIVITY: ${instigatorName} added new administrator ${targetName} to the room.`;
                 case "REMOVE_ADMIN":
-                    return `-----------------${instigatorName} removed administrator ${targetName} to the room-----------------`;
+                    return ` NEW ACTIVITY: ${instigatorName} removed administrator ${targetName} to the room.`;
                 case "ADD_MEMBER":
-                    return `+++++++++++++++++${instigatorName} added new member ${targetName} to the room+++++++++++++++++`;
+                    return `NEW ACTIVITY: ${instigatorName} added new member ${targetName} to the room.`;
                 case "REMOVE_MEMBER":
-                    return `-----------------${instigatorName} removed member ${targetName} to the room-----------------`;
+                    return `NEW ACTIVITY: ${instigatorName} removed member ${targetName} to the room.`;
                 default:
                     return "";
             }
@@ -32,7 +32,7 @@ class ActivityComponent extends Component
         const {users, activity} = this.props;
         return (
             <div>
-                <Box sx={{backgroundColor:'darkgray', height: '20px', color: 'black'}}>{ this.constructActivity(users, activity.instigatorId, activity.thirdPartyId, activity.activity) }</Box>
+                <Box sx={{backgroundColor:'#404040', height: '30px', color: 'orange'}}>{ this.constructActivity(users, activity.instigatorId, activity.thirdPartyId, activity.activity) }</Box>
             </div>
         );
     }
