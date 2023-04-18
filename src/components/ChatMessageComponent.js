@@ -6,10 +6,18 @@ import InputBase from "@mui/material/InputBase";
 
 class ChatMessageComponent extends Component
 {
+    shouldComponentUpdate(nextProps, nextState, nextContent)
+    {
+        const val = JSON.stringify(nextProps.chatMessage) !== JSON.stringify(this.props.chatMessage);
+        return val;
+    }
+
     render()
     {
         const {selectChatMessage, chatMessage, myChatMessageIndex, selectedChatMessageIndex, timeStamp, authorId, users} = this.props;
+
         const handleSelectChatMessage = () => selectChatMessage();
+
         return (
             users.length > 0 && <div>
                 <Stack sx={{color:'white'}}
@@ -53,6 +61,5 @@ const mapDispatchToProps = (dispatch, ownProps) =>
     }
 }
 
-// Note that you need to pass null if you do not need to subscribe to state changes in the store and only want to dispatch actions. For example.
-//export default connect(null, mapDispatchToProps) (ChatMessageComponent);
+
 export default connect(mapStateToProps, mapDispatchToProps) (ChatMessageComponent);

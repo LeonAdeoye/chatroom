@@ -10,8 +10,6 @@ import RecentFolderComponent from "./RecentFolderComponent";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import {fetchUsers} from "../redux/user/userActions";
 
-
-
 class RoomListComponent extends Component
 {
     constructor(props)

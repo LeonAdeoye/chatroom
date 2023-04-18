@@ -12,9 +12,7 @@ class ConversationComponent extends Component
         const {conversation, selectedRoom, activities} = this.props;
         let intermediateResult = conversation.concat(activities);
         let uniqueDates = createDates(intermediateResult);
-        console.log("before: ",intermediateResult.concat(uniqueDates));
         const result = intermediateResult.concat(uniqueDates).sort((a, b) => new Date(a["timeStamp"]).getTime() - new Date(b["timeStamp"]).getTime());
-        console.log("after: ",result);
 
         return (
             conversation && selectedRoom
@@ -34,6 +32,11 @@ class ConversationComponent extends Component
     }
 }
 
+const padDigits = (number, digits) =>
+{
+    return Array(Math.max(digits - String(number).length + 1, 0)).join(0) + number;
+}
+
 const createDates = (inputList) =>
 {
     const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -48,7 +51,7 @@ const createDates = (inputList) =>
         let year = currentDate.getFullYear();
         let day = currentDate.getDate();
         let contentDate = `${weekday} ${day} ${month} ${year}`;
-        let timeStampDate = `${year}-0${currentDate.getMonth() + 1}-${day}T00:00:00.000`;
+        let timeStampDate = `${year}-${padDigits(currentDate.getMonth() + 1, 2)}-${day}T00:00:00.000`;
         result.push({content: contentDate, id: contentDate, contentType: 'date-divider', timeStamp: timeStampDate});
     }
 
