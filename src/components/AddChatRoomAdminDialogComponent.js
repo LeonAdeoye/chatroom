@@ -65,7 +65,7 @@ class AddChatRoomAdminDialogComponent extends Component
                                                                           label='Select administrator to add to room'
                                                                           InputLabelProps={{ style: { color: 'white' }}}/>}
                                       options={users.map(user => user.fullName)}
-                                      value={this.state.newRoomMemberFullName}
+                                      value={this.state.newRoomAdminFullName}
                                       onChange={handleOnChangeEvent}
                                       freeSolo
                                       variant='outlined'
